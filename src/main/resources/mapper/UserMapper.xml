@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.education_applet.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.education_applet.pojo.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="phone_num" jdbcType="VARCHAR" property="phoneNum" />
+    <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="is_vip" jdbcType="SMALLINT" property="isVip" />
+    <result column="vip_due_time" jdbcType="TIMESTAMP" property="vipDueTime" />
+    <result column="user_power" jdbcType="SMALLINT" property="userPower" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

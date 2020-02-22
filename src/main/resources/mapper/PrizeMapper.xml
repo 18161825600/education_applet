@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.education_applet.mapper.PrizeMapper">
+  <resultMap id="BaseResultMap" type="com.example.education_applet.pojo.Prize">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="prize_name" jdbcType="VARCHAR" property="prizeName" />
+    <result column="prize_content" jdbcType="VARCHAR" property="prizeContent" />
+    <result column="prize_integral" jdbcType="INTEGER" property="prizeIntegral" />
+    <result column="prize_num" jdbcType="INTEGER" property="prizeNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>
