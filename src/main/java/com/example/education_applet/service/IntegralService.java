@@ -1,12 +1,13 @@
 package com.example.education_applet.service;
 
-import com.example.education_applet.pojo.Integral;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.SelectAllIntegralResponse;
-import com.example.education_applet.response.SelectIntegralByGetWayRsponse;
-import com.example.education_applet.response.SelectIntegralByUserIdResponse;
-
-import java.util.List;
+import com.example.education_applet.request.integralRequest.SelectIntegralByGetWayRequest;
+import com.example.education_applet.request.integralRequest.SelectIntegralByUserIdAndGetWayRequest;
+import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
+import com.example.education_applet.request.userRequest.UserIdRequest;
+import com.example.education_applet.response.integralResponse.SelectAllIntegralResponse;
+import com.example.education_applet.response.integralResponse.SelectIntegralByGetWayRsponse;
+import com.example.education_applet.response.integralResponse.SelectIntegralByUserIdResponse;
 
 public interface IntegralService {
 

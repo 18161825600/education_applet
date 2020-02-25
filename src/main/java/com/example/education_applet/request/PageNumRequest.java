@@ -6,8 +6,11 @@ package com.example.education_applet.request;
 
 import lombok.Data;
 
-@Data
-public class PageNumRequest {
+import java.io.Serializable;
 
-    private Integer pageNum;
+@Data
+public class PageNumRequest implements Serializable {
+
+    private static final long serialVersionUID = -3835556372183275721L;
+    private Integer pageNum = 1;
 }

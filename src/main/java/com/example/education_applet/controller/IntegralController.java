@@ -2,9 +2,13 @@ package com.example.education_applet.controller;
 
 import com.example.education_applet.common.EducationJsonResult;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.SelectAllIntegralResponse;
-import com.example.education_applet.response.SelectIntegralByGetWayRsponse;
-import com.example.education_applet.response.SelectIntegralByUserIdResponse;
+import com.example.education_applet.request.integralRequest.SelectIntegralByGetWayRequest;
+import com.example.education_applet.request.integralRequest.SelectIntegralByUserIdAndGetWayRequest;
+import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
+import com.example.education_applet.request.userRequest.UserIdRequest;
+import com.example.education_applet.response.integralResponse.SelectAllIntegralResponse;
+import com.example.education_applet.response.integralResponse.SelectIntegralByGetWayRsponse;
+import com.example.education_applet.response.integralResponse.SelectIntegralByUserIdResponse;
 import com.example.education_applet.service.IntegralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +25,7 @@ public class IntegralController {
     public EducationJsonResult<String> checkIn(@RequestBody UserIdRequest userIdRequest){
         Integer integer = integralService.insertIntegral(userIdRequest);
         if(integer==1){
-            return EducationJsonResult.ok("true");
+            return EducationJsonResult.ok();
         }else return EducationJsonResult.errorMsg("false");
     }
 

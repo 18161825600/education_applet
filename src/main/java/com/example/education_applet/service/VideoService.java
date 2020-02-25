@@ -1,8 +1,9 @@
 package com.example.education_applet.service;
 
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.SelectVideoByIdResponse;
-import com.example.education_applet.response.SelectVideoResponse;
+import com.example.education_applet.request.videoRequest.*;
+import com.example.education_applet.response.videoResponse.SelectVideoByIdResponse;
+import com.example.education_applet.response.videoResponse.SelectVideoResponse;
 
 public interface VideoService {
 
@@ -12,7 +13,7 @@ public interface VideoService {
 
     Integer updateVideoVip(UpdateVideoVipRequest updateVideoVipRequest);
 
-    SelectVideoByIdResponse selectVideoById(IdRequest idRequest);
+    <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest);
 
     SelectVideoResponse selectVideoByName(SelectVideoByNameRequest selectVideoByNameRequest);
 

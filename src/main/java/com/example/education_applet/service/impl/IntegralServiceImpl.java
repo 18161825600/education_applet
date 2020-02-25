@@ -5,7 +5,11 @@ import com.example.education_applet.dao.UserDao;
 import com.example.education_applet.pojo.Integral;
 import com.example.education_applet.pojo.User;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.*;
+import com.example.education_applet.request.integralRequest.SelectIntegralByGetWayRequest;
+import com.example.education_applet.request.integralRequest.SelectIntegralByUserIdAndGetWayRequest;
+import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
+import com.example.education_applet.request.userRequest.UserIdRequest;
+import com.example.education_applet.response.integralResponse.*;
 import com.example.education_applet.service.IntegralService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,7 +38,14 @@ public class IntegralServiceImpl implements IntegralService {
         integral.setGetIntegralNum(5);
         integral.setGetIntegralWay("签到");
         integral.setCreateTime(new Date());
-        return integralDao.insertIntegral(integral);
+        Integer integer = integralDao.insertIntegral(integral);
+        if(integer==1){
+            User user = userDao.selectUserById(userIdRequest.getUserId());
+            user.setIntegral(user.getIntegral()+5);
+            user.setUpdateTime(new Date());
+            userDao.updateUser(user);
+            return 1;
+        }else return 0;
     }
 
     @Override

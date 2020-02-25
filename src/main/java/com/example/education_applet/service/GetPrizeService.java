@@ -1,10 +1,13 @@
 package com.example.education_applet.service;
 
-import com.example.education_applet.pojo.GetPrize;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.GetPrizeByIdResponse;
-
-import java.util.List;
+import com.example.education_applet.request.getPrizeRequest.AddGetPrizeRequest;
+import com.example.education_applet.request.prizeRequest.PrizeIdAndPageNumRequest;
+import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
+import com.example.education_applet.response.prizeResponse.GetPrizeByIdResponse;
+import com.example.education_applet.response.getPrizeResponse.SelectAllGetPrizeResponse;
+import com.example.education_applet.response.getPrizeResponse.SelectGetPrizeByPrizeIdResponse;
+import com.example.education_applet.response.getPrizeResponse.SelectGetPrizeByUserIdResponse;
 
 public interface GetPrizeService {
 
@@ -14,9 +17,9 @@ public interface GetPrizeService {
 
     GetPrizeByIdResponse selectGetPrizeById(IdRequest idRequest);
 
-    List<GetPrize> selectGetPrizeByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
+    SelectGetPrizeByUserIdResponse selectGetPrizeByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    List<GetPrize> selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest);
+    SelectGetPrizeByPrizeIdResponse selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest);
 
-    List<GetPrize> selectAllGetPrize(PageNumRequest pageNumRequest);
+    SelectAllGetPrizeResponse selectAllGetPrize(PageNumRequest pageNumRequest);
 }

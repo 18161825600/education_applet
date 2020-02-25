@@ -1,0 +1,12 @@
+package com.example.education_applet.service;
+
+import com.example.education_applet.request.ChatRecordRequest.AddChatRecordRequest;
+import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordByRoomIdAndTimeRequest;
+import com.example.education_applet.response.ChatRecordResponse.SelectChatRecordByRoomIdAndTimeResponse;
+
+public interface ChatRecordService {
+
+    Integer insertChatRecord(AddChatRecordRequest addChatRecordRequest);
+
+    SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordByRoomIdAndTimeRequest selectChatRecordByRoomIdAndTimeRequest);
+}

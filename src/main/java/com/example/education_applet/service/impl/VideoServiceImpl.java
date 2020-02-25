@@ -1,11 +1,14 @@
 package com.example.education_applet.service.impl;
 
-import com.example.education_applet.dao.VideoDao;
-import com.example.education_applet.pojo.Video;
+import com.example.education_applet.dao.*;
+import com.example.education_applet.pojo.*;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.SelectVideoByIdResponse;
-import com.example.education_applet.response.SelectVideoResponse;
-import com.example.education_applet.response.VideoResponse;
+import com.example.education_applet.request.videoRequest.*;
+import com.example.education_applet.response.commentResponse.CommentByVideoIdResponse;
+import com.example.education_applet.response.videoResponse.SelectVideoByIdNotVipResponse;
+import com.example.education_applet.response.videoResponse.SelectVideoByIdResponse;
+import com.example.education_applet.response.videoResponse.SelectVideoResponse;
+import com.example.education_applet.response.videoResponse.VideoResponse;
 import com.example.education_applet.service.VideoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +27,14 @@ public class VideoServiceImpl implements VideoService {
 
     @Autowired
     private VideoDao videoDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private HistoryDao historyDao;
+    @Autowired
+    private CommentDao commentDao;
+    @Autowired
+    private FavoriteDao favoriteDao;
 
     @Override
     public Integer insertVideo(AddVideoRequest addVideoRequest) {
@@ -46,11 +57,37 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public SelectVideoByIdResponse selectVideoById(IdRequest idRequest) {
-        Video video = videoDao.selectVideoById(idRequest.getId());
-        SelectVideoByIdResponse selectVideoByIdResponse = new SelectVideoByIdResponse();
-        BeanUtils.copyProperties(video,selectVideoByIdResponse);
-        return selectVideoByIdResponse;
+    public <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest) {
+        Video video = videoDao.selectVideoById(videoIdAndUserIdRequest.getVideoId());
+        User user = userDao.selectUserById(videoIdAndUserIdRequest.getUserId());
+        if(user.getIsVip().equals((short)1) || (user.getIsVip().equals((short)0) && video.getIsVipVideo().equals(0))) {//vip用户可以看所有视频
+            SelectVideoByIdResponse selectVideoByIdResponse = new SelectVideoByIdResponse();
+            BeanUtils.copyProperties(video, selectVideoByIdResponse);
+
+            List<Comment> comments = commentDao.selectCommentByVideoId(videoIdAndUserIdRequest.getVideoId());
+            List<CommentByVideoIdResponse> list = changeCommentByVideoIdResponse(comments);
+            selectVideoByIdResponse.setCommentByVideoIdResponseList(list);
+            selectVideoByIdResponse.setFavoriteTotal(favoriteDao.countFavoriteByVideoId(videoIdAndUserIdRequest.getVideoId()));
+
+            History history = new History();
+            history.setVideoId(videoIdAndUserIdRequest.getVideoId());
+            history.setUserId(videoIdAndUserIdRequest.getUserId());
+            history.setCreateTime(new Date());
+            historyDao.insertHistory(history);
+
+            return (T)selectVideoByIdResponse;
+        }else {
+            SelectVideoByIdNotVipResponse selectVideoByIdNotVipResponse = new SelectVideoByIdNotVipResponse();
+            BeanUtils.copyProperties(video,selectVideoByIdNotVipResponse);
+
+            List<Comment> comments = commentDao.selectCommentByVideoId(videoIdAndUserIdRequest.getVideoId());
+            List<CommentByVideoIdResponse> list = changeCommentByVideoIdResponse(comments);
+            selectVideoByIdNotVipResponse.setCommentByVideoIdResponseList(list);
+            selectVideoByIdNotVipResponse.setFavoriteTotal(favoriteDao.countFavoriteByVideoId(videoIdAndUserIdRequest.getVideoId()));
+
+            return (T)selectVideoByIdNotVipResponse;
+        }
+
     }
 
     @Override
@@ -117,5 +154,22 @@ public class VideoServiceImpl implements VideoService {
         }
         selectVideoResponse.setVideoResponseList(list);
         return selectVideoResponse;
+    }
+
+    private List<CommentByVideoIdResponse> changeCommentByVideoIdResponse(List<Comment> comments){
+        List<CommentByVideoIdResponse> list = new ArrayList<>();
+        for (Comment comment : comments) {
+            CommentByVideoIdResponse commentByVideoIdResponse = new CommentByVideoIdResponse();
+            commentByVideoIdResponse.setComment(comment.getComment());
+            commentByVideoIdResponse.setCreateTime(comment.getCreateTime());
+
+            User commentUser = userDao.selectUserById(comment.getUserId());
+            commentByVideoIdResponse.setNickName(commentUser.getNickName());
+            commentByVideoIdResponse.setHeadUrl(commentUser.getHeadUrl());
+            commentByVideoIdResponse.setIsVip(commentUser.getIsVip());
+
+            list.add(commentByVideoIdResponse);
+        }
+        return list;
     }
 }

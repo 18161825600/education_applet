@@ -1,11 +1,10 @@
 package com.example.education_applet.service;
 
-import com.example.education_applet.request.LoginUserRequest;
+import com.example.education_applet.request.userRequest.LoginUserRequest;
 import com.example.education_applet.request.PageNumRequest;
-import com.example.education_applet.request.UpdateUserBaseInfoRequest;
-import com.example.education_applet.response.LoginUserResponse;
-import com.example.education_applet.response.SelectAllUserResponse;
-import com.example.education_applet.response.SelectUserResponse;
+import com.example.education_applet.request.userRequest.UpdateUserBaseInfoRequest;
+import com.example.education_applet.response.userResponse.LoginUserResponse;
+import com.example.education_applet.response.userResponse.SelectAllUserResponse;
 
 public interface UserService {
 

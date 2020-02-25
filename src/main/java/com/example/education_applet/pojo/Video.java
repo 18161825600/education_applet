@@ -2,12 +2,14 @@ package com.example.education_applet.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Data
 @Table(name = "t_video")
-public class Video {
+public class Video implements Serializable {
+    private static final long serialVersionUID = 2372667052636147694L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

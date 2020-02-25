@@ -3,21 +3,25 @@ package com.example.education_applet.service.impl;
 import com.example.education_applet.dao.PrizeDao;
 import com.example.education_applet.pojo.Prize;
 import com.example.education_applet.request.*;
-import com.example.education_applet.response.PrizeByIdResponse;
-import com.example.education_applet.response.PrizeResponse;
-import com.example.education_applet.response.SelectPrizeResponse;
+import com.example.education_applet.request.prizeRequest.AddPrizeRequest;
+import com.example.education_applet.request.prizeRequest.UpdatePrizeRequest;
+import com.example.education_applet.response.prizeResponse.PrizeByIdResponse;
+import com.example.education_applet.response.prizeResponse.PrizeResponse;
+import com.example.education_applet.response.prizeResponse.SelectPrizeResponse;
 import com.example.education_applet.service.PrizeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Service
+@Transactional(rollbackFor = Exception.class)
 public class PrizeServiceImpl implements PrizeService {
 
     @Autowired
