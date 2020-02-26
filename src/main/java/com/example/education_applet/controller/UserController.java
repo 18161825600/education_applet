@@ -38,7 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "查找数据库中所有的用户")
     @PostMapping(value = "select/all/user")
-    public EducationJsonResult<SelectAllUserResponse> selectAllUser(PageNumRequest pageNumRequest){
+    public EducationJsonResult<SelectAllUserResponse> selectAllUser(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(userService.selectAllUser(pageNumRequest));
     }
 }

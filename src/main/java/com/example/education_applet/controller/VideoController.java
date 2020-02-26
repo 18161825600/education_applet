@@ -65,7 +65,7 @@ public class VideoController {
 
     @ApiOperation(value = "通过视频是不是vip视频查找视频")
     @PostMapping(value = "select/video/by/isVip")
-    public EducationJsonResult<SelectVideoResponse> selectVideoByVip(SelectVideoByVipRequest selectVideoByVipRequest){
+    public EducationJsonResult<SelectVideoResponse> selectVideoByVip(@RequestBody SelectVideoByVipRequest selectVideoByVipRequest){
         return EducationJsonResult.ok(videoService.selectVideoByVip(selectVideoByVipRequest));
     }
 
