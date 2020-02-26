@@ -25,7 +25,7 @@ public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
 
-    @ApiOperation(value = "通过用户id和视频id收藏视频")
+    @ApiOperation(value = "通过用户id和视频id收藏视频(Z&U)")
     @PostMapping(value = "insert/favorite")
     public EducationJsonResult<String> insertFavorite(@RequestBody AddFavoriteRequest addFavoriteRequest){
         Integer integer = favoriteService.insertFavorite(addFavoriteRequest);
@@ -34,25 +34,25 @@ public class FavoriteController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过收藏的主键id批量删除收藏")
+    @ApiOperation(value = "通过收藏的主键id批量删除收藏(Z&U)")
     @PostMapping(value = "delete/favorite")
     public EducationJsonResult<Integer> deleteFavorite(@RequestBody IdsRequest idsRequest){
         return EducationJsonResult.ok(favoriteService.deleteFavorite(idsRequest));
     }
 
-    @ApiOperation(value = "通过用户id查看该用户的所有收藏")
+    @ApiOperation(value = "通过用户id查看该用户的所有收藏(Z&U)")
     @PostMapping(value = "select/favorite/by/userId")
     public EducationJsonResult<SelectFavoriteByUserIdResponse> selectFavoriteByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest){
         return EducationJsonResult.ok(favoriteService.selectFavoriteByUserId(userIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "通过视频id查看该视频被哪些用户收藏")
+    @ApiOperation(value = "通过视频id查看该视频被哪些用户收藏(Admin)")
     @PostMapping(value = "select/favorite/by/videoId")
     public EducationJsonResult<SelectFavoriteByVideoIdResponse> selectFavoriteByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
         return EducationJsonResult.ok(favoriteService.selectFavoriteByVideoId(videoIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "查看数据库中的所有收藏记录")
+    @ApiOperation(value = "查看数据库中的所有收藏记录(Admin)")
     @PostMapping(value = "select/all/favorite")
     public EducationJsonResult<AllFavoriteResponse> selectAllFavorite(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(favoriteService.selectAllFavorite(pageNumRequest));

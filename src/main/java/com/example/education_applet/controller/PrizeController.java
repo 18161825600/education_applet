@@ -21,7 +21,7 @@ public class PrizeController {
     @Autowired
     private PrizeService prizeService;
 
-    @ApiOperation(value = "添加奖品")
+    @ApiOperation(value = "添加奖品(Admin)")
     @PostMapping(value = "insert/prize")
     public EducationJsonResult<String> insertPrize(@RequestBody AddPrizeRequest addPrizeRequest){
         Integer integer = prizeService.insertPrize(addPrizeRequest);
@@ -30,13 +30,13 @@ public class PrizeController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过奖品的主键id批量删除奖品")
+    @ApiOperation(value = "通过奖品的主键id批量删除奖品(Admin)")
     @PostMapping(value = "delete/prize")
     public EducationJsonResult<String> deletePrize(@RequestBody IdsRequest idsRequest){
         return EducationJsonResult.ok("删除了"+prizeService.deletePrize(idsRequest)+"条数据");
     }
 
-    @ApiOperation(value = "通过奖品的主键id修改奖品")
+    @ApiOperation(value = "通过奖品的主键id修改奖品(Admin)")
     @PostMapping(value = "update/prize")
     public EducationJsonResult<String> updatePrize(@RequestBody UpdatePrizeRequest updatePrizeRequest){
         Integer integer = prizeService.updatePrize(updatePrizeRequest);

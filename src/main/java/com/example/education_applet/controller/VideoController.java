@@ -18,7 +18,7 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
-    @ApiOperation(value = "添加视频")
+    @ApiOperation(value = "添加视频(Admin")
     @PostMapping(value = "insert/video")
     public EducationJsonResult<String> insertVideo(@RequestBody AddVideoRequest addVideoRequest){
         Integer integer = videoService.insertVideo(addVideoRequest);
@@ -27,7 +27,7 @@ public class VideoController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过视频的主键id批量删除视频")
+    @ApiOperation(value = "通过视频的主键id批量删除视频(Admin)")
     @PostMapping(value = "delete/video")
     public EducationJsonResult<String> deleteVideo(@RequestBody IdsRequest idsRequest){
         Integer integer = videoService.deleteVideo(idsRequest);
@@ -36,7 +36,7 @@ public class VideoController {
         }else return EducationJsonResult.ok(integer);
     }
 
-    @ApiOperation(value = "通过视频的id修改视频是不是vip视频")
+    @ApiOperation(value = "通过视频的id修改视频是不是vip视频(Admin)")
     @PostMapping(value = "update/video/vip")
     public EducationJsonResult<String> updateVideoVip(@RequestBody UpdateVideoVipRequest updateVideoVipRequest){
         Integer integer = videoService.updateVideoVip(updateVideoVipRequest);

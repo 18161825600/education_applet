@@ -21,13 +21,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "用户登录")
+    @ApiOperation(value = "用户登录(Z&U)")
     @PostMapping(value = "login/user")
     public EducationJsonResult<LoginUserResponse> loginUser(@RequestBody LoginUserRequest loginUserRequest){
         return EducationJsonResult.ok(userService.loginUser(loginUserRequest));
     }
 
-    @ApiOperation(value = "通过用户id修改用户信息")
+    @ApiOperation(value = "通过用户id修改用户信息(Z&U)")
     @PostMapping(value = "update/user/base/info")
     public EducationJsonResult<String> updateUserBaseInfo(@RequestBody UpdateUserBaseInfoRequest updateUserBaseInfoRequest){
         Integer integer = userService.updateUserBaseInfo(updateUserBaseInfoRequest);
@@ -36,7 +36,7 @@ public class UserController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "查找数据库中所有的用户")
+    @ApiOperation(value = "查找数据库中所有的用户(Admin)")
     @PostMapping(value = "select/all/user")
     public EducationJsonResult<SelectAllUserResponse> selectAllUser(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(userService.selectAllUser(pageNumRequest));

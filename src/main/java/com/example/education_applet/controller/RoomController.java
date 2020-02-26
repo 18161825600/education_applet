@@ -22,7 +22,7 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @ApiOperation(value = "新增直播间")
+    @ApiOperation(value = "新增直播间(Admin)")
     @PostMapping(value = "insert/room")
     public EducationJsonResult<String> insertRoom(@RequestBody AddRoomRequest addRoomRequest){
         Integer integer = roomService.insertRoom(addRoomRequest);
@@ -31,7 +31,7 @@ public class RoomController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过直播间的主键id修改直播间状态")
+    @ApiOperation(value = "通过直播间的主键id修改直播间状态(ZhuBo)")
     @PostMapping(value = "update/room/state")
     public EducationJsonResult<String> updateRoomState(@RequestBody UpdateRoomStateRequest updateRoomStateRequest){
         Integer integer = roomService.updateRoomState(updateRoomStateRequest);
@@ -40,7 +40,7 @@ public class RoomController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过直播间的id修改直播间名字")
+    @ApiOperation(value = "通过直播间的id修改直播间名字(ZhuBo)")
     @PostMapping(value = "update/room/name")
     public EducationJsonResult<String> updateRoomName(@RequestBody UpdateRoomNameRequest updateRoomNameRequest){
         Integer integer = roomService.updateRoomName(updateRoomNameRequest);
@@ -49,7 +49,7 @@ public class RoomController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过直播间的id修改直播间标题")
+    @ApiOperation(value = "通过直播间的id修改直播间标题(ZhuBo)")
     @PostMapping(value = "update/room/title")
     public EducationJsonResult<String> updateRoomTitle(@RequestBody UpdateRoomTitleRequest updateRoomTitleRequest){
         Integer integer = roomService.updateRoomTitle(updateRoomTitleRequest);
@@ -58,7 +58,7 @@ public class RoomController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过直播间的id修改直播间封面图片")
+    @ApiOperation(value = "通过直播间的id修改直播间封面图片(ZhuBo)")
     @PostMapping(value = "update/room/picture")
     public EducationJsonResult<String> updateRoomPicture(@RequestBody UpdateRoomPictureRequest updateRoomPictureRequest){
         Integer integer = roomService.updateRoomPicture(updateRoomPictureRequest);

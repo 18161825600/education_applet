@@ -20,7 +20,7 @@ public class ChatRecordController {
     @Autowired
     private ChatRecordService chatRecordService;
 
-    @ApiOperation(value = "用户发送弹幕")
+    @ApiOperation(value = "用户发送弹幕(User)")
     @PostMapping(value = "insert/chatRecord")
     public EducationJsonResult<String> insertChatRecord(@RequestBody AddChatRecordRequest addChatRecordRequest){
         Integer integer = chatRecordService.insertChatRecord(addChatRecordRequest);
@@ -29,7 +29,7 @@ public class ChatRecordController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过房间id和当前时间查找消息记录")
+    @ApiOperation(value = "通过房间id和用户id和当前时间查找消息记录(*)")
     @PostMapping(value = "select/chatRecord")
     public EducationJsonResult<SelectChatRecordByRoomIdAndTimeResponse> selectSelectChatRecordByRoomIdAndTime(@RequestBody SelectChatRecordByRoomIdAndTimeRequest selectChatRecordByRoomIdAndTimeRequest){
         return EducationJsonResult.ok(chatRecordService.selectSelectChatRecordByRoomIdAndTime(selectChatRecordByRoomIdAndTimeRequest));

@@ -26,7 +26,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @ApiOperation(value = "通过用户id和视频id添加评论")
+    @ApiOperation(value = "通过用户id和视频id添加评论(Z&U)")
     @PostMapping(value = "insert/comment")
     public EducationJsonResult<String> insertComment(@RequestBody AddCommentRequest addCommentRequest){
         Integer integer = commentService.insertComment(addCommentRequest);
@@ -35,13 +35,13 @@ public class CommentController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过评论的主键id批量删除评论")
+    @ApiOperation(value = "通过评论的主键id批量删除评论(Z&U)")
     @PostMapping(value = "delete/comment")
     public EducationJsonResult<String> deleteComment(@RequestBody IdsRequest idsRequest){
         return EducationJsonResult.ok(commentService.deleteComment(idsRequest));
     }
 
-    @ApiOperation(value = "通过评论的主键id修改评论")
+    @ApiOperation(value = "通过评论的主键id修改评论(Z&U)")
     @PostMapping(value = "update/comment")
     public EducationJsonResult<String> updateComment(@RequestBody UpdateCommentRequest updateCommentRequest){
         Integer integer = commentService.updateComment(updateCommentRequest);
@@ -50,19 +50,19 @@ public class CommentController {
         }else return EducationJsonResult.errorMsg("false");
     }
 
-    @ApiOperation(value = "通过用户id查看该用户全部评论")
+    @ApiOperation(value = "通过用户id查看该用户全部评论(Z&U)")
     @PostMapping(value = "select/comment/by/userId")
     public EducationJsonResult<SelectCommentByUserIdResponse> selectCommentByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest){
         return EducationJsonResult.ok(commentService.selectCommentByUserId(userIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "通过视频id查看该视频的全部评论")
+    @ApiOperation(value = "通过视频id查看该视频的全部评论(*)")
     @PostMapping(value = "select/comment/by/videoId")
     public EducationJsonResult<SelectCommentByVideoIdResponse> selectCommentByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
         return EducationJsonResult.ok(commentService.selectCommentByVideoId(videoIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "查看数据库中所有的评论")
+    @ApiOperation(value = "查看数据库中所有的评论(Admin)")
     @PostMapping(value = "select/all/comment")
     public EducationJsonResult<SelectAllCommentResponse> selectAllComment(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(commentService.selectAllComment(pageNumRequest));

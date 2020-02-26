@@ -24,7 +24,7 @@ public class HistoryController {
     @Autowired
     private HistoryService historyService;
 
-    @ApiOperation(value = "通过看视频的历史记录的主键id批量删除记录")
+    @ApiOperation(value = "通过看视频的历史记录的主键id批量删除记录(Z&U)")
     @PostMapping(value = "delete/history")
     public EducationJsonResult<Integer> deleteHistory(@RequestBody IdsRequest idsRequest){
         Integer integer = historyService.deleteHistory(idsRequest);
@@ -34,19 +34,19 @@ public class HistoryController {
         return EducationJsonResult.ok(integer);
     }
 
-    @ApiOperation(value = "通过用户id查看该用户的观看视频历史记录")
+    @ApiOperation(value = "通过用户id查看该用户的观看视频历史记录(Z&U)")
     @PostMapping(value = "select/history/by/userId")
     public EducationJsonResult<SelectHistoryByUserIdResponse> selectHistoryByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest){
         return EducationJsonResult.ok(historyService.selectHistoryByUserId(userIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "通过视频id查看该视频被哪些用户观看过")
+    @ApiOperation(value = "通过视频id查看该视频被哪些用户观看过(Admin)")
     @PostMapping(value = "select/history/by/videoId")
     public EducationJsonResult<SelectHistoryByVideoIdResponse> selectHistoryByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
         return EducationJsonResult.ok(historyService.selectHistoryByVideoId(videoIdAndPageNumRequest));
     }
 
-    @ApiOperation(value = "查看数据库中所有的观看记录")
+    @ApiOperation(value = "查看数据库中所有的观看记录(Admin)")
     @PostMapping(value = "select/all/history")
     public EducationJsonResult<AllHistoryResponse> selectAllHistory(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(historyService.selectAllHistory(pageNumRequest));
