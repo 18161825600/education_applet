@@ -1,6 +1,7 @@
 package com.example.education_applet.controller;
 
 import com.example.education_applet.common.EducationJsonResult;
+import com.example.education_applet.request.IdsRequest;
 import com.example.education_applet.request.PageNumRequest;
 import com.example.education_applet.request.roomRequest.RoomIdAndPageNumRequest;
 import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
@@ -18,6 +19,11 @@ public class WatchLiveController {
 
     @Autowired
     private WatchLiveService watchLiveService;
+
+    @PostMapping(value = "delete/watchLive")
+    public EducationJsonResult<Integer> deleteWatchLiva(IdsRequest idsRequest){
+        return EducationJsonResult.ok(watchLiveService.deleteWatchLiva(idsRequest));
+    }
 
     @PostMapping(value = "select/watchLive/by/userId")
     public EducationJsonResult<SelectWatchLiveByUserIdResponse> selectWatchLiveByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest){

@@ -6,6 +6,7 @@ import com.example.education_applet.dao.WatchLiveDao;
 import com.example.education_applet.pojo.Room;
 import com.example.education_applet.pojo.User;
 import com.example.education_applet.pojo.WatchLive;
+import com.example.education_applet.request.IdsRequest;
 import com.example.education_applet.request.PageNumRequest;
 import com.example.education_applet.request.roomRequest.RoomIdAndPageNumRequest;
 import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
@@ -29,6 +30,11 @@ public class WatchLiveServiceImpl implements WatchLiveService {
     private UserDao userDao;
     @Autowired
     private RoomDao roomDao;
+
+    @Override
+    public Integer deleteWatchLiva(IdsRequest idsRequest) {
+        return watchLiveDao.deleteWatchLive(idsRequest.getIds());
+    }
 
     @Override
     public SelectWatchLiveByUserIdResponse selectWatchLiveByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest) {
