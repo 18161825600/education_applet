@@ -23,13 +23,14 @@ import com.github.pagehelper.PageInfo;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Service
 public class FollowServiceImpl implements FollowService {
 
     @Autowired
