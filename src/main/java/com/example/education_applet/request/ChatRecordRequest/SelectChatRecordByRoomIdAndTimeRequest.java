@@ -9,6 +9,7 @@ import java.util.Date;
 public class SelectChatRecordByRoomIdAndTimeRequest implements Serializable {
     private static final long serialVersionUID = 7965372707116979621L;
 
+
     private Long roomId;
 
     private Long userId;
