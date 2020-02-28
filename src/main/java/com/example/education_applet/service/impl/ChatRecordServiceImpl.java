@@ -41,9 +41,12 @@ public class ChatRecordServiceImpl implements ChatRecordService {
 
     @Override
     public SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordByRoomIdAndTimeRequest selectChatRecordByRoomIdAndTimeRequest) {
+        //通过用户id和房间id拿到该用户的观看记录
         WatchLive watchLive = watchLiveDao.selectWatchLiveByUserIdAndRoomId(selectChatRecordByRoomIdAndTimeRequest.getUserId(), selectChatRecordByRoomIdAndTimeRequest.getRoomId());
+        //通过房间id和用户最后拿到直播间弹幕的时间，查找的弹幕集合
         List<ChatRecord> chatRecords = chatRecordDao.selectChatRecordByRoomIdAndTime(selectChatRecordByRoomIdAndTimeRequest.getRoomId(),watchLive.getReceiveTime());
 
+        //修改用户拿到直播间弹幕的时间
         watchLive.setReceiveTime(new Date());
         watchLiveDao.updateWatchLive(watchLive);
 

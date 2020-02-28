@@ -52,12 +52,11 @@ public class FollowServiceImpl implements FollowService {
             follow.setCreateTime(new Date());
             Integer integer = followDao.insertFollow(follow);
             if(integer==1) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                String newFormat = simpleDateFormat.format(new Date());
+                String newFormat = new SimpleDateFormat("yyyy-mm-dd").format(new Date());
                 List<Follow> follows = followDao.selectFollowByUserId(addFollowRequest.getUserId());
                 Integer count = 0;
                 for (Follow follow1 : follows) {
-                    String oldFormat = simpleDateFormat.format(follow1.getCreateTime());
+                    String oldFormat = new SimpleDateFormat("yyyy-mm-dd").format(follow1.getCreateTime());
                     if(oldFormat.equals(newFormat)){
                         count = count +1;
                     }

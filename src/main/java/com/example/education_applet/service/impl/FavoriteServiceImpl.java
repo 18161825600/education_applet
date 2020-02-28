@@ -51,12 +51,11 @@ public class FavoriteServiceImpl implements FavoriteService {
             favorite.setCreateTime(new Date());
             Integer integer = favoriteDao.insertFavorite(favorite);
             if (integer == 1) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                String newFormat = simpleDateFormat.format(new Date());
+                String newFormat = new SimpleDateFormat("yyyy-mm-dd").format(new Date());
                 List<Favorite> favorites = favoriteDao.selectFavoriteByUserId(addFavoriteRequest.getUserId());
                 Integer count = 0;
                 for (Favorite favorite1 : favorites) {
-                    String createFormat = simpleDateFormat.format(favorite1.getCreateTime());
+                    String createFormat = new SimpleDateFormat("yyyy-mm-dd").format(favorite1.getCreateTime());
                     if (newFormat.equals(createFormat)) {
                         count = count + 1;
                     }

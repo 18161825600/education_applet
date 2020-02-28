@@ -49,12 +49,11 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreateTime(new Date());
         Integer integer = commentDao.insertComment(comment);
         if(integer==1){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            String nowDate = simpleDateFormat.format(new Date());
+            String nowDate = new SimpleDateFormat("yyyy-mm-dd").format(new Date());
             List<Comment> comments = commentDao.selectCommentByUserId(addCommentRequest.getUserId());
             Integer count = 0;
             for (Comment comment1 : comments) {
-                String oldDate = simpleDateFormat.format(comment1.getCreateTime());
+                String oldDate = new SimpleDateFormat("yyyy-mm-dd").format(comment1.getCreateTime());
                 if(oldDate.equals(nowDate)){
                     count = count+1;
                 }
