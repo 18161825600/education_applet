@@ -58,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
                     count = count+1;
                 }
             }
+            //每天前三次评论加五点积分
             if(count<=3){
 
                 Integral integral = new Integral();

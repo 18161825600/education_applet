@@ -60,6 +60,7 @@ public class FavoriteServiceImpl implements FavoriteService {
                         count = count + 1;
                     }
                 }
+                //每天首次收藏加五点积分
                 if (count == 1) {
                     Integral integral = new Integral();
                     integral.setUserId(addFavoriteRequest.getUserId());

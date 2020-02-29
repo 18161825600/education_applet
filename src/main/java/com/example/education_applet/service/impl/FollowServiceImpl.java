@@ -61,6 +61,7 @@ public class FollowServiceImpl implements FollowService {
                         count = count +1;
                     }
                 }
+                //每天首次关注主播加五点积分
                 if(count==1){
                     Integral integral = new Integral();
                     integral.setUserId(addFollowRequest.getUserId());
