@@ -7,7 +7,7 @@ import com.example.education_applet.pojo.ChatRecord;
 import com.example.education_applet.pojo.User;
 import com.example.education_applet.pojo.WatchLive;
 import com.example.education_applet.request.ChatRecordRequest.AddChatRecordRequest;
-import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordByRoomIdAndTimeRequest;
+import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordRequest;
 import com.example.education_applet.response.ChatRecordResponse.ChatRecordByRoomIdAndTimeResponse;
 import com.example.education_applet.response.ChatRecordResponse.SelectChatRecordByRoomIdAndTimeResponse;
 import com.example.education_applet.service.ChatRecordService;
@@ -40,7 +40,7 @@ public class ChatRecordServiceImpl implements ChatRecordService {
     }
 
     @Override
-    public SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordByRoomIdAndTimeRequest selectChatRecordByRoomIdAndTimeRequest) {
+    public SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordRequest selectChatRecordByRoomIdAndTimeRequest) {
         //通过用户id和房间id拿到该用户的观看记录
         WatchLive watchLive = watchLiveDao.selectWatchLiveByUserIdAndRoomId(selectChatRecordByRoomIdAndTimeRequest.getUserId(), selectChatRecordByRoomIdAndTimeRequest.getRoomId());
         //通过房间id和用户最后拿到直播间弹幕的时间，查找的弹幕集合

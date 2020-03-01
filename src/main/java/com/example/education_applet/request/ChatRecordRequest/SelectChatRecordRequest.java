@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class SelectChatRecordByRoomIdAndTimeRequest implements Serializable {
+public class SelectChatRecordRequest implements Serializable {
     private static final long serialVersionUID = 7965372707116979621L;
 
 

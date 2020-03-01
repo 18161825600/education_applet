@@ -3,7 +3,7 @@ package com.example.education_applet.controller;
 import com.example.education_applet.common.EducationJsonResult;
 import com.example.education_applet.pojo.ChatRecord;
 import com.example.education_applet.request.ChatRecordRequest.AddChatRecordRequest;
-import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordByRoomIdAndTimeRequest;
+import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordRequest;
 import com.example.education_applet.response.ChatRecordResponse.SelectChatRecordByRoomIdAndTimeResponse;
 import com.example.education_applet.service.ChatRecordService;
 import io.swagger.annotations.Api;
@@ -31,7 +31,7 @@ public class ChatRecordController {
 
     @ApiOperation(value = "通过房间id和用户id和当前时间查找消息记录(*)")
     @PostMapping(value = "select/chatRecord")
-    public EducationJsonResult<SelectChatRecordByRoomIdAndTimeResponse> selectSelectChatRecordByRoomIdAndTime(@RequestBody SelectChatRecordByRoomIdAndTimeRequest selectChatRecordByRoomIdAndTimeRequest){
-        return EducationJsonResult.ok(chatRecordService.selectSelectChatRecordByRoomIdAndTime(selectChatRecordByRoomIdAndTimeRequest));
+    public EducationJsonResult<SelectChatRecordByRoomIdAndTimeResponse> selectSelectChatRecordByRoomIdAndTime(@RequestBody SelectChatRecordRequest selectChatRecordRequest){
+        return EducationJsonResult.ok(chatRecordService.selectSelectChatRecordByRoomIdAndTime(selectChatRecordRequest));
     }
 }
