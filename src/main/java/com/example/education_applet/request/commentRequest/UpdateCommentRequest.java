@@ -12,5 +12,6 @@ public class UpdateCommentRequest implements Serializable {
     @ApiModelProperty(value = "评论的主键id")
     private Long id;
 
+    @ApiModelProperty(value = "评论内容")
     private String comment;
 }

@@ -17,6 +17,6 @@ public class SelectIntegralByGetWayRequest implements Serializable {
     @ApiModelProperty(value = "获得积分的途径")
     private String getWay;
 
-
+    @ApiModelProperty(value = "页数")
     private Integer pageNum = 1;
 }

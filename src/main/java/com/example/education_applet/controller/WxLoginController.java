@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -51,9 +52,14 @@ public class WxLoginController {
         String openid = model.getOpenid();
         log.debug("openid",new Date()+"--openid->"+openid);
 
-        User userByOpenId = 	userService.findUserByOpenId(openid);
+        User userByOpenId = userService.findUserByOpenId(openid);
         if (userByOpenId!=null){
             Map map=new HashMap();
+            if(userByOpenId.getUserPower()==0){
+                map.put("power","普通用户");
+            }else {
+                map.put("power","主播");
+            }
             map.put("end","登录成功");
             map.put("openid",openid);
             return EducationJsonResult.ok(map);

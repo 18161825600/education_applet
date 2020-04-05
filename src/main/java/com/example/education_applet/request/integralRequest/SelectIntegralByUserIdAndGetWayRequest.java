@@ -20,5 +20,6 @@ public class SelectIntegralByUserIdAndGetWayRequest implements Serializable {
     @ApiModelProperty(value = "获得积分的途径")
     private String getIntegralWay;
 
+    @ApiModelProperty(value = "页数")
     private Integer pageNum = 1;
 }
