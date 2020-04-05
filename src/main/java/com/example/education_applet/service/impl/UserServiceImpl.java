@@ -12,7 +12,6 @@ import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
 import com.example.education_applet.response.userResponse.SelectUserResponse;
 import com.example.education_applet.service.UserService;
-import com.example.education_applet.utils.HttpUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.sf.json.JSONObject;
@@ -34,56 +33,29 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private IntegralDao integralDao;
 
+
     @Override
-    public LoginUserResponse loginUser(LoginUserRequest loginUserRequest) {
-        String result = "";
-        try{
-            result = HttpUtils.doGet(
-                    "https://api.weixin.qq.com/sns/jscode2session?appid="
-                            + Configure.mini_appID + "&secret="
-                            + Configure.mini_secret + "&js_code="
-                            + loginUserRequest.getCode()
-                            + "&grant_type=authorization_code", null);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject jsonObject = JSONObject.fromObject(result);
-        String session_key = jsonObject.get("session_key").toString();
-        String openId = jsonObject.get("openId").toString();
-        User user = userDao.selectUserByOpenId(openId);
-        LoginUserResponse loginUserResponse = new LoginUserResponse();
-        if(user!=null){
-            BeanUtils.copyProperties(user,loginUserResponse);
-            loginUserResponse.setSession_key(session_key);
-            return loginUserResponse;
-        }else {
-            User insertUser = new User();
-            insertUser.setOpenId(openId);
-            insertUser.setIntegral(0);
-            insertUser.setIsVip((short)0);
-            insertUser.setUserPower((short)0);
-            insertUser.setCreateTime(new Date());
-            Integer integer = userDao.insertUser(insertUser);
+    public Integer insertUser(User user) {
+        user.setCreateTime(new Date());
+        user.setIsVip((short)0);
+        user.setUserPower((short)0);
+        Integer integer = userDao.insertUser(user);
+        User userByOpenId = userDao.selectUserByOpenId(user.getOpenId());
+        if(integer==1) {
+            //注册成功获得积分
+            user.setIntegral(10);
+            user.setCreateTime(new Date());
+            userDao.updateUser(userByOpenId);
 
-            User user1 = userDao.selectUserByOpenId(openId);
-            if(integer==1){
-                //注册成功获得积分
-                user1.setIntegral(10);
-                userDao.updateUser(user1);
-
-                Integral integral = new Integral();
-                integral.setUserId(user1.getId());
-                integral.setGetIntegralNum(10);
-                integral.setGetIntegralWay("注册");
-                integral.setCreateTime(new Date());
-                integralDao.insertIntegral(integral);
-            }
-
-            BeanUtils.copyProperties(user1,loginUserResponse);
-            loginUserResponse.setSession_key(session_key);
-            return loginUserResponse;
+            //添加积分记录
+            Integral integral = new Integral();
+            integral.setUserId(userByOpenId.getId());
+            integral.setGetIntegralNum(10);
+            integral.setGetIntegralWay("注册");
+            integral.setCreateTime(new Date());
+            integralDao.insertIntegral(integral);
         }
+        return 1;
     }
 
     @Override
@@ -94,6 +66,12 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNum(updateUserBaseInfoRequest.getPhoneNum());
         user.setUpdateTime(new Date());
         return userDao.updateUser(user);
+    }
+
+    @Override
+    public User findUserByOpenId(String openId) {
+        User user = userDao.selectUserByOpenId(openId);
+        return user;
     }
 
     @Override

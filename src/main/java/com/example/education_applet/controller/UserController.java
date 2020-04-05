@@ -21,12 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "用户登录(Z&U)")
-    @PostMapping(value = "login/user")
-    public EducationJsonResult<LoginUserResponse> loginUser(@RequestBody LoginUserRequest loginUserRequest){
-        return EducationJsonResult.ok(userService.loginUser(loginUserRequest));
-    }
-
     @ApiOperation(value = "通过用户id修改用户信息(Z&U)")
     @PostMapping(value = "update/user/base/info")
     public EducationJsonResult<String> updateUserBaseInfo(@RequestBody UpdateUserBaseInfoRequest updateUserBaseInfoRequest){

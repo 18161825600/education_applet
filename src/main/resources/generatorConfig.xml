@@ -81,14 +81,15 @@
         <table tableName="t_favorite" domainObjectName="Favorite">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        -->
         <table tableName="t_video" domainObjectName="Video">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <!--
+
+
         <table tableName="t_room" domainObjectName="Room">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+
         <table tableName="t_follow" domainObjectName="Follow">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
@@ -104,9 +105,11 @@
         <table tableName="t_get_prize" domainObjectName="GetPrize">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        -->
         <table tableName="t_watch_live" domainObjectName="WatchLive">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        <!--
         <table tableName="t_chat_record" domainObjectName="ChatRecord">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
