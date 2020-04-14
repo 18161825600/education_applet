@@ -25,5 +25,5 @@ public class FollowByUserIdResponse implements Serializable {
     //主播的头像
     private String headUrl;
 
-    private Date createTime;
+    private String createTime;
 }

@@ -19,5 +19,5 @@ public class WatchLiveResponse implements Serializable {
 
     private String roomPicture;
 
-    private Date openTime;
+    private String openTime;
 }

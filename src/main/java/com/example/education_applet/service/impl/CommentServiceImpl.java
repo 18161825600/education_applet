@@ -134,7 +134,7 @@ public class CommentServiceImpl implements CommentService {
             commentByVideoIdResponse.setIsVip(user.getIsVip());
 
             commentByVideoIdResponse.setComment(comment.getComment());
-            commentByVideoIdResponse.setCreateTime(comment.getCreateTime());
+            commentByVideoIdResponse.setCreateTime(changeDate(comment.getCreateTime()));
 
             list.add(commentByVideoIdResponse);
         }
@@ -163,12 +163,17 @@ public class CommentServiceImpl implements CommentService {
             allCommentResponse.setIsVipVideo(video.getIsVipVideo());
 
             allCommentResponse.setComment(comment.getComment());
-            allCommentResponse.setCreateTime(comment.getCreateTime());
+            allCommentResponse.setCreateTime(changeDate(comment.getCreateTime()));
 
             list.add(allCommentResponse);
         }
         selectAllCommentResponse.setAllCommentResponseList(list);
         selectAllCommentResponse.setTotal(commentDao.countAllComment());
         return selectAllCommentResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

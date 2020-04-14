@@ -7,7 +7,9 @@ import com.example.education_applet.pojo.Integral;
 import com.example.education_applet.pojo.User;
 import com.example.education_applet.request.userRequest.LoginUserRequest;
 import com.example.education_applet.request.PageNumRequest;
+import com.example.education_applet.request.userRequest.OpenIdRequest;
 import com.example.education_applet.request.userRequest.UpdateUserBaseInfoRequest;
+import com.example.education_applet.response.userResponse.FindUserByOpenIdResponse;
 import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
 import com.example.education_applet.response.userResponse.SelectUserResponse;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +46,8 @@ public class UserServiceImpl implements UserService {
         User userByOpenId = userDao.selectUserByOpenId(user.getOpenId());
         if(integer==1) {
             //注册成功获得积分
-            user.setIntegral(10);
-            user.setCreateTime(new Date());
+            userByOpenId.setIntegral(10);
+            userByOpenId.setCreateTime(new Date());
             userDao.updateUser(userByOpenId);
 
             //添加积分记录
@@ -69,10 +72,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByOpenId(String openId) {
-        User user = userDao.selectUserByOpenId(openId);
-        return user;
+    public FindUserByOpenIdResponse findUserByOpenId(OpenIdRequest openIdRequest) {
+        User user = userDao.selectUserByOpenId(openIdRequest.getOpenId());
+        FindUserByOpenIdResponse response = new FindUserByOpenIdResponse();
+        BeanUtils.copyProperties(user,response);
+        response.setVipDueTime(changeDate(user.getVipDueTime()));
+        return response;
     }
+
+    @Override
+    public User userByOpenId(String openId) {
+        return userDao.selectUserByOpenId(openId);
+    }
+
 
     @Override
     public SelectAllUserResponse selectAllUser(PageNumRequest pageNumRequest) {
@@ -86,10 +98,17 @@ public class UserServiceImpl implements UserService {
         for (User user : userList) {
             SelectUserResponse selectUserResponse = new SelectUserResponse();
             BeanUtils.copyProperties(user,selectUserResponse);
+            selectUserResponse.setCreateTime(changeDate(user.getCreateTime()));
+            selectUserResponse.setVipDueTime(changeDate(user.getVipDueTime()));
             list.add(selectUserResponse);
         }
         selectAllUserResponse.setSelectUserResponseList(list);
         selectAllUserResponse.setTotal(userDao.countAllUser());
         return selectAllUserResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

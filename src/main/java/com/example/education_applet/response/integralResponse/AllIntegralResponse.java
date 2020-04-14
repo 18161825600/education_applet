@@ -19,5 +19,5 @@ public class AllIntegralResponse implements Serializable {
 
     private String getIntegralWay;
 
-    private Date createTime;
+    private String createTime;
 }

@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -119,6 +120,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
         for (GetPrize getPrize : getPrizeList) {
             GetPrizeByUserIdResponse getPrizeByUserIdResponse = new GetPrizeByUserIdResponse();
             BeanUtils.copyProperties(getPrize,getPrizeByUserIdResponse);
+            getPrizeByUserIdResponse.setCreateTime(changeDate(getPrize.getCreateTime()));
 
             Prize prize = prizeDao.selectPrizeById(getPrize.getPrizeId());
             getPrizeByUserIdResponse.setPrizeName(prize.getPrizeName());
@@ -142,6 +144,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
         for (GetPrize getPrize : getPrizeList) {
             GetPrizeByPrizeIdResponse getPrizeByPrizeIdResponse = new GetPrizeByPrizeIdResponse();
             BeanUtils.copyProperties(getPrize,getPrizeByPrizeIdResponse);
+            getPrizeByPrizeIdResponse.setCreateTime(changeDate(getPrize.getCreateTime()));
 
             User user = userDao.selectUserById(getPrize.getUserId());
             getPrizeByPrizeIdResponse.setNickName(user.getNickName());
@@ -165,6 +168,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
         for (GetPrize getPrize : prizeList) {
             GetAllPrizeResponse getAllPrizeResponse = new GetAllPrizeResponse();
             BeanUtils.copyProperties(getPrize,getAllPrizeResponse);
+            getAllPrizeResponse.setCreateTime(changeDate(getPrize.getCreateTime()));
 
             User user = userDao.selectUserById(getPrize.getUserId());
             getAllPrizeResponse.setNickName(user.getNickName());
@@ -177,5 +181,10 @@ public class GetPrizeServiceImpl implements GetPrizeService {
         selectAllGetPrizeResponse.setGetAllPrizeResponseList(list);
         selectAllGetPrizeResponse.setTotal(getPrizeDao.countAllGetPrize());
         return selectAllGetPrizeResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

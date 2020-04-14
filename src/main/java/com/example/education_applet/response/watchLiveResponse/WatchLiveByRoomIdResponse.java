@@ -15,5 +15,5 @@ public class WatchLiveByRoomIdResponse implements Serializable {
 
     private Short isVip;
 
-    private Date openTime;
+    private String openTime;
 }

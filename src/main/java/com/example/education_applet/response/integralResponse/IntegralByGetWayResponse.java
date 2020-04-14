@@ -17,5 +17,5 @@ public class IntegralByGetWayResponse implements Serializable {
 
     private Integer getIntegralNum;
 
-    private Date createTime;
+    private String createTime;
 }

@@ -1,19 +1,11 @@
 package com.example.education_applet.response.userResponse;
 
-/**
- * 查找用户的返回值
- */
-
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class SelectUserResponse implements Serializable {
-
-    private static final long serialVersionUID = -2032215135197424282L;
+public class FindUserByOpenIdResponse {
 
     private Long id;
 
@@ -30,8 +22,4 @@ public class SelectUserResponse implements Serializable {
     private Short isVip;
 
     private String vipDueTime;
-
-    private Short userPower;
-
-    private String createTime;
 }

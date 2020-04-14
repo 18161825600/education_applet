@@ -18,7 +18,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,7 +53,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
             Room room = roomDao.selectRoomById(watchLive.getRoomId());
             BeanUtils.copyProperties(room,watchLiveByUserIdResponse);
 
-            watchLiveByUserIdResponse.setOpenTime(watchLive.getOpenTime());
+            watchLiveByUserIdResponse.setOpenTime(changeDate(watchLive.getOpenTime()));
             list.add(watchLiveByUserIdResponse);
         }
         selectWatchLiveByUserIdResponse.setWatchLiveByUserIdResponseList(list);
@@ -74,7 +76,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
             User user = userDao.selectUserById(watchLive.getUserId());
             BeanUtils.copyProperties(user,watchLiveByRoomIdResponse);
 
-            watchLiveByRoomIdResponse.setOpenTime(watchLive.getOpenTime());
+            watchLiveByRoomIdResponse.setOpenTime(changeDate(watchLive.getOpenTime()));
             list.add(watchLiveByRoomIdResponse);
         }
         selectWatchLiveByRoomIdResponse.setWatchLiveByRoomIdResponseList(list);
@@ -101,12 +103,17 @@ public class WatchLiveServiceImpl implements WatchLiveService {
             watchLiveResponse.setRoomName(room.getRoomName());
             watchLiveResponse.setRoomPicture(room.getRoomPicture());
 
-            watchLiveResponse.setOpenTime(watchLive.getOpenTime());
+            watchLiveResponse.setOpenTime(changeDate(watchLive.getOpenTime()));
 
             list.add(watchLiveResponse);
         }
         allWatchLiveResponse.setWatchLiveResponseList(list);
         allWatchLiveResponse.setTotal(watchLiveDao.countAllWatchLive());
         return allWatchLiveResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

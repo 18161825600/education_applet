@@ -13,5 +13,5 @@ public class WatchLiveByUserIdResponse implements Serializable {
 
     private String roomPicture;
 
-    private Date openTime;
+    private String openTime;
 }

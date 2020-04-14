@@ -52,7 +52,8 @@ public class WxLoginController {
         String openid = model.getOpenid();
         log.debug("openid",new Date()+"--openid->"+openid);
 
-        User userByOpenId = userService.findUserByOpenId(openid);
+
+        User userByOpenId = userService.userByOpenId(openid);
         if (userByOpenId!=null){
             Map map=new HashMap();
             if(userByOpenId.getUserPower()==0){

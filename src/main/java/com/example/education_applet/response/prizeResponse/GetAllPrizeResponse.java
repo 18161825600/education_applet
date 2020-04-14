@@ -20,5 +20,5 @@ public class GetAllPrizeResponse implements Serializable {
 
     private Integer prizeTotalIntegral;
 
-    private Date createTime;
+    private String createTime;
 }

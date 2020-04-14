@@ -3,7 +3,9 @@ package com.example.education_applet.controller;
 import com.example.education_applet.common.EducationJsonResult;
 import com.example.education_applet.request.userRequest.LoginUserRequest;
 import com.example.education_applet.request.PageNumRequest;
+import com.example.education_applet.request.userRequest.OpenIdRequest;
 import com.example.education_applet.request.userRequest.UpdateUserBaseInfoRequest;
+import com.example.education_applet.response.userResponse.FindUserByOpenIdResponse;
 import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
 import com.example.education_applet.service.UserService;
@@ -34,5 +36,11 @@ public class UserController {
     @PostMapping(value = "select/all/user")
     public EducationJsonResult<SelectAllUserResponse> selectAllUser(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(userService.selectAllUser(pageNumRequest));
+    }
+
+    @ApiOperation(value = "通过openId查找用户(Z&U)")
+    @PostMapping(value = "find/user/by/openId")
+    public EducationJsonResult<FindUserByOpenIdResponse> findUserByOpenId(OpenIdRequest openIdRequest){
+        return EducationJsonResult.ok(userService.findUserByOpenId(openIdRequest));
     }
 }

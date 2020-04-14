@@ -100,7 +100,7 @@ public class FavoriteServiceImpl implements FavoriteService {
             Video video = videoDao.selectVideoById(favorite.getVideoId());
             BeanUtils.copyProperties(video,favoriteByUserIdResponse);
 
-            favoriteByUserIdResponse.setCreateTime(favorite.getCreateTime());
+            favoriteByUserIdResponse.setCreateTime(changeDate(favorite.getCreateTime()));
             list.add(favoriteByUserIdResponse);
         }
         selectFavoriteByUserIdResponse.setFavoriteByUserIdResponseList(list);
@@ -122,7 +122,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
             User user = userDao.selectUserById(favorite.getUserId());
             BeanUtils.copyProperties(user,favoriteByVideoIdResponse);
-            favoriteByVideoIdResponse.setCreateTime(favorite.getCreateTime());
+            favoriteByVideoIdResponse.setCreateTime(changeDate(favorite.getCreateTime()));
 
             list.add(favoriteByVideoIdResponse);
         }
@@ -151,11 +151,16 @@ public class FavoriteServiceImpl implements FavoriteService {
             favoriteResponse.setVideoPicture(video.getVideoPicture());
             favoriteResponse.setIsVipVideo(video.getIsVipVideo());
 
-            favoriteResponse.setCreateTime(favorite.getCreateTime());
+            favoriteResponse.setCreateTime(changeDate(favorite.getCreateTime()));
             list.add(favoriteResponse);
         }
         allFavoriteResponse.setFavoriteResponseList(list);
         allFavoriteResponse.setTotal(favoriteDao.countAllFavorite());
         return allFavoriteResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

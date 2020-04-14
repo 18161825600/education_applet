@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -161,7 +162,7 @@ public class VideoServiceImpl implements VideoService {
         for (Comment comment : comments) {
             CommentByVideoIdResponse commentByVideoIdResponse = new CommentByVideoIdResponse();
             commentByVideoIdResponse.setComment(comment.getComment());
-            commentByVideoIdResponse.setCreateTime(comment.getCreateTime());
+            commentByVideoIdResponse.setCreateTime(changeDate(comment.getCreateTime()));
 
             User commentUser = userDao.selectUserById(comment.getUserId());
             commentByVideoIdResponse.setNickName(commentUser.getNickName());
@@ -171,5 +172,10 @@ public class VideoServiceImpl implements VideoService {
             list.add(commentByVideoIdResponse);
         }
         return list;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

@@ -106,7 +106,7 @@ public class FollowServiceImpl implements FollowService {
             followByUserIdResponse.setNickName(user.getNickName());
             followByUserIdResponse.setHeadUrl(user.getHeadUrl());
 
-            followByUserIdResponse.setCreateTime(follow.getCreateTime());
+            followByUserIdResponse.setCreateTime(changeDate(follow.getCreateTime()));
             list.add(followByUserIdResponse);
         }
         selectFollowByUserIdResponse.setFollowByUserIdResponseList(list);
@@ -129,7 +129,7 @@ public class FollowServiceImpl implements FollowService {
             User user = userDao.selectUserById(follow.getUserId());
             BeanUtils.copyProperties(user,followByRoomIdResponse);
 
-            followByRoomIdResponse.setCreateTime(follow.getCreateTime());
+            followByRoomIdResponse.setCreateTime(changeDate(follow.getCreateTime()));
             list.add(followByRoomIdResponse);
         }
         selectFollowByRoomIdResponse.setFollowByRoomIdResponseList(list);
@@ -156,11 +156,16 @@ public class FollowServiceImpl implements FollowService {
             followResponse.setRoomName(room.getRoomName());
             followResponse.setRoomPicture(room.getRoomPicture());
 
-            followResponse.setCreateTime(follow.getCreateTime());
+            followResponse.setCreateTime(changeDate(follow.getCreateTime()));
             list.add(followResponse);
         }
         allFollowResponse.setFollowResponseList(list);
         allFollowResponse.setTotal(followDao.countAllFollow());
         return allFollowResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

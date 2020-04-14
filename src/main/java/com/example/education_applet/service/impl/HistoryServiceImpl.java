@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,7 +52,7 @@ public class HistoryServiceImpl implements HistoryService {
         List<HistoryByUserIdResponse> list = new ArrayList<>();
         for (History history : historyList) {
             HistoryByUserIdResponse historyByUserIdResponse = new HistoryByUserIdResponse();
-            historyByUserIdResponse.setCreateTime(history.getCreateTime());
+            historyByUserIdResponse.setCreateTime(changeDate(history.getCreateTime()));
 
             Video video = videoDao.selectVideoById(history.getVideoId());
             historyByUserIdResponse.setVideoName(video.getVideoName());
@@ -80,7 +82,7 @@ public class HistoryServiceImpl implements HistoryService {
             historyByVideoIdResponse.setHeadUrl(user.getHeadUrl());
             historyByVideoIdResponse.setIsVip(user.getIsVip());
 
-            historyByVideoIdResponse.setCreateTime(history.getCreateTime());
+            historyByVideoIdResponse.setCreateTime(changeDate(history.getCreateTime()));
             list.add(historyByVideoIdResponse);
         }
         selectHistoryByVideoIdResponse.setHistoryByVideoIdResponseList(list);
@@ -106,11 +108,16 @@ public class HistoryServiceImpl implements HistoryService {
             historyResponse.setVideoName(video.getVideoName());
             historyResponse.setVideoPicture(video.getVideoPicture());
 
-            historyResponse.setCreateTime(history.getCreateTime());
+            historyResponse.setCreateTime(changeDate(history.getCreateTime()));
             list.add(historyResponse);
         }
         allHistoryResponse.setHistoryResponseList(list);
         allHistoryResponse.setTotal(historyDao.countAllHistory());
         return allHistoryResponse;
+    }
+
+    private String changeDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

@@ -19,5 +19,5 @@ public class HistoryResponse implements Serializable {
 
     private String videoPicture;
 
-    private Date createTime;
+    private String createTime;
 }

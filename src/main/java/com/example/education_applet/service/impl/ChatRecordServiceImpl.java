@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,10 +59,12 @@ public class ChatRecordServiceImpl implements ChatRecordService {
             User user = userDao.selectUserById(chatRecord.getUserId());
             BeanUtils.copyProperties(user,record);
 
+
             record.setUserMessage(chatRecord.getUserMessage());
             list.add(record);
         }
         response.setChatRecordList(list);
         return response;
     }
+
 }

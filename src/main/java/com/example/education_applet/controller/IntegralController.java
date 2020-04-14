@@ -7,6 +7,7 @@ import com.example.education_applet.request.integralRequest.SelectIntegralByUser
 import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
 import com.example.education_applet.request.userRequest.UserIdRequest;
 import com.example.education_applet.response.integralResponse.SelectAllIntegralResponse;
+import com.example.education_applet.response.integralResponse.SelectCheckInByUserIdResponse;
 import com.example.education_applet.response.integralResponse.SelectIntegralByGetWayRsponse;
 import com.example.education_applet.response.integralResponse.SelectIntegralByUserIdResponse;
 import com.example.education_applet.service.IntegralService;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @Api(description = "获得积分记录")
 @RestController
 public class IntegralController {
@@ -26,10 +29,12 @@ public class IntegralController {
 
     @ApiOperation(value = "通过用户id进行签到(Z&U)")
     @PostMapping(value = "check/in")
-    public EducationJsonResult<String> checkIn(@RequestBody UserIdRequest userIdRequest){
+    public EducationJsonResult<String> checkIn(@RequestBody UserIdRequest userIdRequest) throws ParseException {
         Integer integer = integralService.insertIntegral(userIdRequest);
         if(integer==1){
             return EducationJsonResult.ok();
+        }else if(integer==-1) {
+            return EducationJsonResult.errorMsg("fail");
         }else return EducationJsonResult.errorMsg("false");
     }
 
@@ -55,5 +60,11 @@ public class IntegralController {
     @PostMapping(value = "select/all/integral")
     public EducationJsonResult<SelectAllIntegralResponse> selectAllIntegral(@RequestBody PageNumRequest pageNumRequest){
         return EducationJsonResult.ok(integralService.selectAllIntegral(pageNumRequest));
+    }
+
+    @ApiOperation(value = "查看用户联系签到几天")
+    @PostMapping(value = "select/checkIn")
+    public EducationJsonResult<SelectCheckInByUserIdResponse> selectCheckInByUserId(@RequestBody UserIdRequest userIdRequest) throws ParseException{
+        return EducationJsonResult.ok(integralService.selectCheckInByUserId(userIdRequest));
     }
 }

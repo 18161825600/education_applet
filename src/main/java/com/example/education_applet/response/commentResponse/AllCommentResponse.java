@@ -23,5 +23,5 @@ public class AllCommentResponse implements Serializable {
 
     private String comment;
 
-    private Date createTime;
+    private String createTime;
 }
