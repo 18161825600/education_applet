@@ -12,6 +12,7 @@ import com.example.education_applet.response.videoResponse.VideoResponse;
 import com.example.education_applet.service.VideoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class VideoServiceImpl implements VideoService {
@@ -60,10 +62,23 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest) {
         Video video = videoDao.selectVideoById(videoIdAndUserIdRequest.getVideoId());
+        log.info("video-{}",video);
         User user = userDao.selectUserById(videoIdAndUserIdRequest.getUserId());
-        if(user.getIsVip().equals((short)1) || (user.getIsVip().equals((short)0) && video.getIsVipVideo().equals(0))) {//vip用户可以看所有视频
+        if(user.getIsVip()==0 && video.getIsVipVideo()==1) {//非会员不能看会员视频
+            SelectVideoByIdNotVipResponse selectVideoByIdNotVipResponse = new SelectVideoByIdNotVipResponse();
+            BeanUtils.copyProperties(video,selectVideoByIdNotVipResponse);
+            log.info("selectVideoByIdNotVipResponse-{}",selectVideoByIdNotVipResponse);
+
+            List<Comment> comments = commentDao.selectCommentByVideoId(videoIdAndUserIdRequest.getVideoId());
+            List<CommentByVideoIdResponse> list = changeCommentByVideoIdResponse(comments);
+            selectVideoByIdNotVipResponse.setCommentByVideoIdResponseList(list);
+            selectVideoByIdNotVipResponse.setFavoriteTotal(favoriteDao.countFavoriteByVideoId(videoIdAndUserIdRequest.getVideoId()));
+
+            return (T)selectVideoByIdNotVipResponse;
+        }else{//vip用户可以看所有视频
             SelectVideoByIdResponse selectVideoByIdResponse = new SelectVideoByIdResponse();
             BeanUtils.copyProperties(video, selectVideoByIdResponse);
+            log.info("selectVideoByIdResponse-{}",selectVideoByIdResponse);
 
             List<Comment> comments = commentDao.selectCommentByVideoId(videoIdAndUserIdRequest.getVideoId());
             List<CommentByVideoIdResponse> list = changeCommentByVideoIdResponse(comments);
@@ -77,16 +92,6 @@ public class VideoServiceImpl implements VideoService {
             historyDao.insertHistory(history);
 
             return (T)selectVideoByIdResponse;
-        }else {
-            SelectVideoByIdNotVipResponse selectVideoByIdNotVipResponse = new SelectVideoByIdNotVipResponse();
-            BeanUtils.copyProperties(video,selectVideoByIdNotVipResponse);
-
-            List<Comment> comments = commentDao.selectCommentByVideoId(videoIdAndUserIdRequest.getVideoId());
-            List<CommentByVideoIdResponse> list = changeCommentByVideoIdResponse(comments);
-            selectVideoByIdNotVipResponse.setCommentByVideoIdResponseList(list);
-            selectVideoByIdNotVipResponse.setFavoriteTotal(favoriteDao.countFavoriteByVideoId(videoIdAndUserIdRequest.getVideoId()));
-
-            return (T)selectVideoByIdNotVipResponse;
         }
 
     }

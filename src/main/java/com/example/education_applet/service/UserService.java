@@ -9,13 +9,15 @@ import com.example.education_applet.response.userResponse.FindUserByOpenIdRespon
 import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface UserService {
 
     Integer insertUser(User user);
 
-    Integer updateUserBaseInfo(UpdateUserBaseInfoRequest updateUserBaseInfoRequest);
+    Integer updateUserBaseInfo(UpdateUserBaseInfoRequest updateUserBaseInfoRequest) throws UnsupportedEncodingException;
 
-    FindUserByOpenIdResponse findUserByOpenId(OpenIdRequest openIdRequest);
+    FindUserByOpenIdResponse findUserByOpenId(OpenIdRequest openIdRequest) throws UnsupportedEncodingException;
 
     User userByOpenId(String openId);
 

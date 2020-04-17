@@ -63,6 +63,7 @@ public class WxLoginController {
             }
             map.put("end","登录成功");
             map.put("openid",openid);
+            map.put("id",userByOpenId.getId());
             return EducationJsonResult.ok(map);
         }else {
             //没有该用户时直接在后台生成新的用户
@@ -70,9 +71,11 @@ public class WxLoginController {
             user.setOpenId(openid);
             //添加新用户
             userService.insertUser(user);
+            User user1 = userService.userByOpenId(openid);
             Map map=new HashMap();
             map.put("end","登录成功,欢迎新用户");
             map.put("openid",openid);
+            map.put("id",user1.getId());
             return EducationJsonResult.ok(map);
         }
     }

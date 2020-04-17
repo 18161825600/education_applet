@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户")
 @RestController
 public class UserController {
@@ -25,7 +27,7 @@ public class UserController {
 
     @ApiOperation(value = "通过用户id修改用户信息(Z&U)")
     @PostMapping(value = "update/user/base/info")
-    public EducationJsonResult<String> updateUserBaseInfo(@RequestBody UpdateUserBaseInfoRequest updateUserBaseInfoRequest){
+    public EducationJsonResult<String> updateUserBaseInfo(@RequestBody UpdateUserBaseInfoRequest updateUserBaseInfoRequest)throws UnsupportedEncodingException {
         Integer integer = userService.updateUserBaseInfo(updateUserBaseInfoRequest);
         if(integer==1){
             return EducationJsonResult.ok();
@@ -40,7 +42,7 @@ public class UserController {
 
     @ApiOperation(value = "通过openId查找用户(Z&U)")
     @PostMapping(value = "find/user/by/openId")
-    public EducationJsonResult<FindUserByOpenIdResponse> findUserByOpenId(OpenIdRequest openIdRequest){
+    public EducationJsonResult<FindUserByOpenIdResponse> findUserByOpenId(OpenIdRequest openIdRequest)throws UnsupportedEncodingException{
         return EducationJsonResult.ok(userService.findUserByOpenId(openIdRequest));
     }
 }

@@ -17,11 +17,13 @@ import com.example.education_applet.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,9 +64,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer updateUserBaseInfo(UpdateUserBaseInfoRequest updateUserBaseInfoRequest) {
+    public Integer updateUserBaseInfo(UpdateUserBaseInfoRequest updateUserBaseInfoRequest) throws UnsupportedEncodingException {
         User user = userDao.selectUserById(updateUserBaseInfoRequest.getId());
-        user.setNickName(updateUserBaseInfoRequest.getNickName());
+        user.setNickName(Base64.encodeBase64String(updateUserBaseInfoRequest.getNickName().getBytes("utf-8")));
         user.setHeadUrl(updateUserBaseInfoRequest.getHeadUrl());
         user.setPhoneNum(updateUserBaseInfoRequest.getPhoneNum());
         user.setUpdateTime(new Date());
@@ -72,11 +74,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public FindUserByOpenIdResponse findUserByOpenId(OpenIdRequest openIdRequest) {
+    public FindUserByOpenIdResponse findUserByOpenId(OpenIdRequest openIdRequest) throws UnsupportedEncodingException {
         User user = userDao.selectUserByOpenId(openIdRequest.getOpenId());
         FindUserByOpenIdResponse response = new FindUserByOpenIdResponse();
         BeanUtils.copyProperties(user,response);
-        response.setVipDueTime(changeDate(user.getVipDueTime()));
+        response.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
+        if(user.getVipDueTime()==null){
+            response.setVipDueTime(null);
+        }else {
+            response.setVipDueTime(changeDate(user.getVipDueTime()));
+        }
         return response;
     }
 
@@ -99,7 +106,11 @@ public class UserServiceImpl implements UserService {
             SelectUserResponse selectUserResponse = new SelectUserResponse();
             BeanUtils.copyProperties(user,selectUserResponse);
             selectUserResponse.setCreateTime(changeDate(user.getCreateTime()));
-            selectUserResponse.setVipDueTime(changeDate(user.getVipDueTime()));
+            if(user.getVipDueTime()==null){
+                selectUserResponse.setVipDueTime(null);
+            }else {
+                selectUserResponse.setVipDueTime(changeDate(user.getVipDueTime()));
+            }
             list.add(selectUserResponse);
         }
         selectAllUserResponse.setSelectUserResponseList(list);
