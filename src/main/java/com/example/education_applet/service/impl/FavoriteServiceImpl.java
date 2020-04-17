@@ -18,11 +18,13 @@ import com.example.education_applet.response.favoriteResponse.*;
 import com.example.education_applet.service.FavoriteService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,7 +111,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public SelectFavoriteByVideoIdResponse selectFavoriteByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) {
+    public SelectFavoriteByVideoIdResponse selectFavoriteByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,videoIdAndPageNumRequest.getPageNum()*10);
         List<Favorite> favorites = favoriteDao.selectFavoriteByVideoId(videoIdAndPageNumRequest.getVideoId());
         PageInfo<Favorite> pageInfo = new PageInfo<>(favorites);
@@ -122,6 +124,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
             User user = userDao.selectUserById(favorite.getUserId());
             BeanUtils.copyProperties(user,favoriteByVideoIdResponse);
+            favoriteByVideoIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
             favoriteByVideoIdResponse.setCreateTime(changeDate(favorite.getCreateTime()));
 
             list.add(favoriteByVideoIdResponse);
@@ -132,7 +135,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public AllFavoriteResponse selectAllFavorite(PageNumRequest pageNumRequest) {
+    public AllFavoriteResponse selectAllFavorite(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<Favorite> favorites = favoriteDao.selectAllFavorite();
         PageInfo<Favorite> pageInfo = new PageInfo<>(favorites);
@@ -145,6 +148,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
             User user = userDao.selectUserById(favorite.getUserId());
             BeanUtils.copyProperties(user,favoriteResponse);
+            favoriteResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             Video video = videoDao.selectVideoById(favorite.getVideoId());
             favoriteResponse.setVideoName(video.getVideoName());

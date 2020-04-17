@@ -9,17 +9,19 @@ import com.example.education_applet.response.getPrizeResponse.SelectAllGetPrizeR
 import com.example.education_applet.response.getPrizeResponse.SelectGetPrizeByPrizeIdResponse;
 import com.example.education_applet.response.getPrizeResponse.SelectGetPrizeByUserIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface GetPrizeService {
 
     Integer insertGetPrize(AddGetPrizeRequest addGetPrizeRequest);
 
     Integer deleteGetPrize(IdsRequest idsRequest);
 
-    GetPrizeByIdResponse selectGetPrizeById(IdRequest idRequest);
+    GetPrizeByIdResponse selectGetPrizeById(IdRequest idRequest) throws UnsupportedEncodingException;
 
     SelectGetPrizeByUserIdResponse selectGetPrizeByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectGetPrizeByPrizeIdResponse selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest);
+    SelectGetPrizeByPrizeIdResponse selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    SelectAllGetPrizeResponse selectAllGetPrize(PageNumRequest pageNumRequest);
+    SelectAllGetPrizeResponse selectAllGetPrize(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

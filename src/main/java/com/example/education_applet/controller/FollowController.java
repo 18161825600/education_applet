@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户关注直播间")
 @RestController
 public class FollowController {
@@ -42,19 +44,19 @@ public class FollowController {
 
     @ApiOperation(value = "通过用户id查看该用户的关注记录(Z&U)")
     @PostMapping(value = "select/follow/by/userId")
-    public EducationJsonResult<SelectFollowByUserIdResponse> selectFollowByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest){
+    public EducationJsonResult<SelectFollowByUserIdResponse> selectFollowByUserId(@RequestBody UserIdAndPageNumRequest userIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(followService.selectFollowByUserId(userIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "通过房间id查看该直播间被哪些用户关注(Z&A)")
     @PostMapping(value = "select/follow/by/roomId")
-    public EducationJsonResult<SelectFollowByRoomIdResponse> selectFollowByRoomId(@RequestBody RoomIdAndPageNumRequest roomIdAndPageNumRequest){
+    public EducationJsonResult<SelectFollowByRoomIdResponse> selectFollowByRoomId(@RequestBody RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(followService.selectFollowByRoomId(roomIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查看数据库中的全部关注记录(Admin)")
     @PostMapping(value = "select/all/follow")
-    public EducationJsonResult<AllFollowResponse> selectAllFollow(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<AllFollowResponse> selectAllFollow(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(followService.selectAllFollow(pageNumRequest));
     }
 }

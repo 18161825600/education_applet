@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户收藏喜欢的视频")
 @RestController
 public class FavoriteController {
@@ -48,13 +50,13 @@ public class FavoriteController {
 
     @ApiOperation(value = "通过视频id查看该视频被哪些用户收藏(Admin)")
     @PostMapping(value = "select/favorite/by/videoId")
-    public EducationJsonResult<SelectFavoriteByVideoIdResponse> selectFavoriteByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
+    public EducationJsonResult<SelectFavoriteByVideoIdResponse> selectFavoriteByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(favoriteService.selectFavoriteByVideoId(videoIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查看数据库中的所有收藏记录(Admin)")
     @PostMapping(value = "select/all/favorite")
-    public EducationJsonResult<AllFavoriteResponse> selectAllFavorite(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<AllFavoriteResponse> selectAllFavorite(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(favoriteService.selectAllFavorite(pageNumRequest));
     }
 }

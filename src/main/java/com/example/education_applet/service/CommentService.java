@@ -11,6 +11,8 @@ import com.example.education_applet.response.commentResponse.SelectAllCommentRes
 import com.example.education_applet.response.commentResponse.SelectCommentByUserIdResponse;
 import com.example.education_applet.response.commentResponse.SelectCommentByVideoIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface CommentService {
 
     Integer insertComment(AddCommentRequest addCommentRequest);
@@ -21,8 +23,8 @@ public interface CommentService {
 
     SelectCommentByUserIdResponse selectCommentByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectCommentByVideoIdResponse selectCommentByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest);
+    SelectCommentByVideoIdResponse selectCommentByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    SelectAllCommentResponse selectAllComment(PageNumRequest pageNumRequest);
+    SelectAllCommentResponse selectAllComment(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 
 }

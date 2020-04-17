@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "直播间内发送消息记录")
 @RestController
 public class ChatRecordController {
@@ -31,7 +33,7 @@ public class ChatRecordController {
 
     @ApiOperation(value = "通过房间id和用户id和当前时间查找消息记录(*)")
     @PostMapping(value = "select/chatRecord")
-    public EducationJsonResult<SelectChatRecordByRoomIdAndTimeResponse> selectSelectChatRecordByRoomIdAndTime(@RequestBody SelectChatRecordRequest selectChatRecordRequest){
+    public EducationJsonResult<SelectChatRecordByRoomIdAndTimeResponse> selectSelectChatRecordByRoomIdAndTime(@RequestBody SelectChatRecordRequest selectChatRecordRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(chatRecordService.selectSelectChatRecordByRoomIdAndTime(selectChatRecordRequest));
     }
 }

@@ -20,11 +20,13 @@ import com.example.education_applet.response.prizeResponse.GetPrizeByUserIdRespo
 import com.example.education_applet.service.GetPrizeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,13 +95,13 @@ public class GetPrizeServiceImpl implements GetPrizeService {
     }
 
     @Override
-    public GetPrizeByIdResponse selectGetPrizeById(IdRequest idRequest) {
+    public GetPrizeByIdResponse selectGetPrizeById(IdRequest idRequest) throws UnsupportedEncodingException {
         GetPrize getPrize = getPrizeDao.selectGetPrizeById(idRequest.getId());
         GetPrizeByIdResponse getPrizeByIdResponse = new GetPrizeByIdResponse();
         BeanUtils.copyProperties(getPrize,getPrizeByIdResponse);
 
         User user = userDao.selectUserById(getPrize.getUserId());
-        getPrizeByIdResponse.setNickName(user.getNickName());
+        getPrizeByIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
         Prize prize = prizeDao.selectPrizeById(getPrize.getPrizeId());
         getPrizeByIdResponse.setPrizeName(prize.getPrizeName());
@@ -133,7 +135,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
     }
 
     @Override
-    public SelectGetPrizeByPrizeIdResponse selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest) {
+    public SelectGetPrizeByPrizeIdResponse selectGetPrizeByPrizeId(PrizeIdAndPageNumRequest prizeIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,prizeIdAndPageNumRequest.getPageNum()*10);
         List<GetPrize> getPrizes = getPrizeDao.selectGetPrizeByPrizeId(prizeIdAndPageNumRequest.getPrizeId());
         PageInfo<GetPrize> pageInfo = new PageInfo<>(getPrizes);
@@ -147,7 +149,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
             getPrizeByPrizeIdResponse.setCreateTime(changeDate(getPrize.getCreateTime()));
 
             User user = userDao.selectUserById(getPrize.getUserId());
-            getPrizeByPrizeIdResponse.setNickName(user.getNickName());
+            getPrizeByPrizeIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             list.add(getPrizeByPrizeIdResponse);
         }
@@ -157,7 +159,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
     }
 
     @Override
-    public SelectAllGetPrizeResponse selectAllGetPrize(PageNumRequest pageNumRequest) {
+    public SelectAllGetPrizeResponse selectAllGetPrize(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<GetPrize> getPrizes = getPrizeDao.selectAllGetPrize();
         PageInfo<GetPrize> pageInfo = new PageInfo<>(getPrizes);
@@ -171,7 +173,7 @@ public class GetPrizeServiceImpl implements GetPrizeService {
             getAllPrizeResponse.setCreateTime(changeDate(getPrize.getCreateTime()));
 
             User user = userDao.selectUserById(getPrize.getUserId());
-            getAllPrizeResponse.setNickName(user.getNickName());
+            getAllPrizeResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             Prize prize = prizeDao.selectPrizeById(getPrize.getPrizeId());
             getAllPrizeResponse.setPrizeName(prize.getPrizeName());

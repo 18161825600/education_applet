@@ -13,15 +13,17 @@ import com.example.education_applet.response.followResponse.FollowByIdResponse;
 import com.example.education_applet.response.followResponse.SelectFollowByRoomIdResponse;
 import com.example.education_applet.response.followResponse.SelectFollowByUserIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface FollowService {
 
     Integer insertFollow(AddFollowRequest addFollowRequest);
 
     Integer deleteFollow(IdsRequest idsRequest);
 
-    SelectFollowByUserIdResponse selectFollowByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
+    SelectFollowByUserIdResponse selectFollowByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    SelectFollowByRoomIdResponse selectFollowByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest);
+    SelectFollowByRoomIdResponse selectFollowByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    AllFollowResponse selectAllFollow(PageNumRequest pageNumRequest);
+    AllFollowResponse selectAllFollow(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

@@ -8,6 +8,8 @@ import com.example.education_applet.request.roomRequest.*;
 import com.example.education_applet.response.roomResponse.RoomByIdResponse;
 import com.example.education_applet.response.roomResponse.SelectRoomResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface RoomService {
 
     Integer insertRoom(AddRoomRequest addRoomRequest);
@@ -20,7 +22,7 @@ public interface RoomService {
 
     Integer updateRoomPicture(UpdateRoomPictureRequest updateRoomPictureRequest);
 
-    RoomByIdResponse selectRoomById(RoomIdAndUserIdRequest roomIdAndUserIdRequest);
+    RoomByIdResponse selectRoomById(RoomIdAndUserIdRequest roomIdAndUserIdRequest) throws UnsupportedEncodingException;
 
     SelectRoomResponse selectRoomByName(RoomNameRequest roomNameRequest);
 

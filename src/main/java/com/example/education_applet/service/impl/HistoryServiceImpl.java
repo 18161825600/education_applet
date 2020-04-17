@@ -15,11 +15,13 @@ import com.example.education_applet.response.historyResponse.*;
 import com.example.education_applet.service.HistoryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +68,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public SelectHistoryByVideoIdResponse selectHistoryByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) {
+    public SelectHistoryByVideoIdResponse selectHistoryByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,videoIdAndPageNumRequest.getPageNum()*10);
         List<History> histories = historyDao.selectHistoryByVideoId(videoIdAndPageNumRequest.getVideoId());
         PageInfo<History> pageInfo = new PageInfo<>(histories);
@@ -78,7 +80,7 @@ public class HistoryServiceImpl implements HistoryService {
             HistoryByVideoIdResponse historyByVideoIdResponse = new HistoryByVideoIdResponse();
 
             User user = userDao.selectUserById(history.getUserId());
-            historyByVideoIdResponse.setNickName(user.getNickName());
+            historyByVideoIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
             historyByVideoIdResponse.setHeadUrl(user.getHeadUrl());
             historyByVideoIdResponse.setIsVip(user.getIsVip());
 
@@ -91,7 +93,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public AllHistoryResponse selectAllHistory(PageNumRequest pageNumRequest) {
+    public AllHistoryResponse selectAllHistory(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<History> histories = historyDao.selectAllHistory();
         PageInfo<History> pageInfo = new PageInfo<>(histories);
@@ -103,6 +105,7 @@ public class HistoryServiceImpl implements HistoryService {
             HistoryResponse historyResponse = new HistoryResponse();
             User user = userDao.selectUserById(history.getUserId());
             BeanUtils.copyProperties(user,historyResponse);
+            historyResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             Video video = videoDao.selectVideoById(history.getVideoId());
             historyResponse.setVideoName(video.getVideoName());

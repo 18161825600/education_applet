@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "直播间")
 @RestController
 public class RoomController {
@@ -69,7 +71,7 @@ public class RoomController {
 
     @ApiOperation(value = "通过直播间id查看直播间详情")
     @PostMapping(value = "select/room/by/id")
-    public EducationJsonResult<RoomByIdResponse> selectRoomById(@RequestBody RoomIdAndUserIdRequest roomIdAndUserIdRequest){
+    public EducationJsonResult<RoomByIdResponse> selectRoomById(@RequestBody RoomIdAndUserIdRequest roomIdAndUserIdRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(roomService.selectRoomById(roomIdAndUserIdRequest));
     }
 

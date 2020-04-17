@@ -9,13 +9,15 @@ import com.example.education_applet.response.historyResponse.AllHistoryResponse;
 import com.example.education_applet.response.historyResponse.SelectHistoryByUserIdResponse;
 import com.example.education_applet.response.historyResponse.SelectHistoryByVideoIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface HistoryService {
 
     Integer deleteHistory(IdsRequest idsRequest);
 
     SelectHistoryByUserIdResponse selectHistoryByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectHistoryByVideoIdResponse selectHistoryByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest);
+    SelectHistoryByVideoIdResponse selectHistoryByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    AllHistoryResponse selectAllHistory(PageNumRequest pageNumRequest);
+    AllHistoryResponse selectAllHistory(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

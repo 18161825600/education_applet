@@ -14,10 +14,12 @@ import com.example.education_applet.response.watchLiveResponse.*;
 import com.example.education_applet.service.WatchLiveService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,7 +64,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
     }
 
     @Override
-    public SelectWatchLiveByRoomIdResponse selectWatchLiveByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) {
+    public SelectWatchLiveByRoomIdResponse selectWatchLiveByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,roomIdAndPageNumRequest.getPageNum()*10);
         List<WatchLive> watchLives = watchLiveDao.selectWatchLiveByRoomId(roomIdAndPageNumRequest.getRoomId());
         PageInfo<WatchLive> pageInfo = new PageInfo<>(watchLives);
@@ -75,6 +77,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
 
             User user = userDao.selectUserById(watchLive.getUserId());
             BeanUtils.copyProperties(user,watchLiveByRoomIdResponse);
+            watchLiveByRoomIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             watchLiveByRoomIdResponse.setOpenTime(changeDate(watchLive.getOpenTime()));
             list.add(watchLiveByRoomIdResponse);
@@ -85,7 +88,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
     }
 
     @Override
-    public AllWatchLiveResponse selectAllWatchLive(PageNumRequest pageNumRequest) {
+    public AllWatchLiveResponse selectAllWatchLive(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<WatchLive> watchLives = watchLiveDao.selectAllWatchLive();
         PageInfo<WatchLive> pageInfo = new PageInfo<>(watchLives);
@@ -98,6 +101,7 @@ public class WatchLiveServiceImpl implements WatchLiveService {
 
             User user = userDao.selectUserById(watchLive.getUserId());
             BeanUtils.copyProperties(user,watchLiveResponse);
+            watchLiveResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             Room room = roomDao.selectRoomById(watchLive.getRoomId());
             watchLiveResponse.setRoomName(room.getRoomName());

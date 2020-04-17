@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "观看直播历史记录")
 @RestController
 public class WatchLiveController {
@@ -37,13 +39,13 @@ public class WatchLiveController {
 
     @ApiOperation(value = "通过房间id查看该直播间有哪些用户观看过(Admin)")
     @PostMapping(value = "select/watchLive/by/roomId")
-    public EducationJsonResult<SelectWatchLiveByRoomIdResponse> selectWatchLiveByRoomId(@RequestBody RoomIdAndPageNumRequest roomIdAndPageNumRequest){
+    public EducationJsonResult<SelectWatchLiveByRoomIdResponse> selectWatchLiveByRoomId(@RequestBody RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(watchLiveService.selectWatchLiveByRoomId(roomIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查找数据库中所有的观看记录(Admin)")
     @PostMapping(value = "select/all/watchLive")
-    public EducationJsonResult<AllWatchLiveResponse> selectAllWatchLive(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<AllWatchLiveResponse> selectAllWatchLive(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(watchLiveService.selectAllWatchLive(pageNumRequest));
     }
 }

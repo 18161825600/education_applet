@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户对视频的评论")
 @RestController
 public class CommentController {
@@ -58,13 +60,13 @@ public class CommentController {
 
     @ApiOperation(value = "通过视频id查看该视频的全部评论(*)")
     @PostMapping(value = "select/comment/by/videoId")
-    public EducationJsonResult<SelectCommentByVideoIdResponse> selectCommentByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
+    public EducationJsonResult<SelectCommentByVideoIdResponse> selectCommentByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(commentService.selectCommentByVideoId(videoIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查看数据库中所有的评论(Admin)")
     @PostMapping(value = "select/all/comment")
-    public EducationJsonResult<SelectAllCommentResponse> selectAllComment(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<SelectAllCommentResponse> selectAllComment(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(commentService.selectAllComment(pageNumRequest));
     }
 }

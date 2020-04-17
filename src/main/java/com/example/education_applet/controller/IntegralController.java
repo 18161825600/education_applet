@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
 @Api(description = "获得积分记录")
@@ -46,7 +47,7 @@ public class IntegralController {
 
     @ApiOperation(value = "通过获得积分的路径查看数据库中有哪些记录(Admin)")
     @PostMapping(value = "select/integral/by/getWay")
-    public EducationJsonResult<SelectIntegralByGetWayRsponse> selectIntegralByGetWay(@RequestBody SelectIntegralByGetWayRequest selectIntegralByGetWayRequest){
+    public EducationJsonResult<SelectIntegralByGetWayRsponse> selectIntegralByGetWay(@RequestBody SelectIntegralByGetWayRequest selectIntegralByGetWayRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(integralService.selectIntegralByGetWay(selectIntegralByGetWayRequest));
     }
 
@@ -58,7 +59,7 @@ public class IntegralController {
 
     @ApiOperation(value = "查看数据库中的所有获得积分记录(Admin)")
     @PostMapping(value = "select/all/integral")
-    public EducationJsonResult<SelectAllIntegralResponse> selectAllIntegral(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<SelectAllIntegralResponse> selectAllIntegral(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(integralService.selectAllIntegral(pageNumRequest));
     }
 

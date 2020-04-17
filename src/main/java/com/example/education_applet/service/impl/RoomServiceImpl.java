@@ -15,11 +15,13 @@ import com.example.education_applet.response.roomResponse.SelectRoomResponse;
 import com.example.education_applet.service.RoomService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,13 +81,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomByIdResponse selectRoomById(RoomIdAndUserIdRequest roomIdAndUserIdRequest) {
+    public RoomByIdResponse selectRoomById(RoomIdAndUserIdRequest roomIdAndUserIdRequest) throws UnsupportedEncodingException {
         Room room = roomDao.selectRoomById(roomIdAndUserIdRequest.getRoomId());
         RoomByIdResponse roomByIdResponse = new RoomByIdResponse();
         BeanUtils.copyProperties(room,roomByIdResponse);
 
         User anchor = userDao.selectUserById(room.getUserId());
-        roomByIdResponse.setNickName(anchor.getNickName());
+        roomByIdResponse.setNickName(new String(Base64.decodeBase64(anchor.getNickName().getBytes()), "utf-8"));
         roomByIdResponse.setHeadUrl(anchor.getHeadUrl());
 
         WatchLive oldWatchLive = watchLiveDao.selectWatchLiveByUserIdAndRoomId(roomIdAndUserIdRequest.getUserId(), roomIdAndUserIdRequest.getRoomId());

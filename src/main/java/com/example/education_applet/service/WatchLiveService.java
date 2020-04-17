@@ -11,13 +11,15 @@ import com.example.education_applet.response.watchLiveResponse.AllWatchLiveRespo
 import com.example.education_applet.response.watchLiveResponse.SelectWatchLiveByRoomIdResponse;
 import com.example.education_applet.response.watchLiveResponse.SelectWatchLiveByUserIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface WatchLiveService {
 
     Integer deleteWatchLiva(IdsRequest idsRequest);
 
     SelectWatchLiveByUserIdResponse selectWatchLiveByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectWatchLiveByRoomIdResponse selectWatchLiveByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest);
+    SelectWatchLiveByRoomIdResponse selectWatchLiveByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    AllWatchLiveResponse selectAllWatchLive(PageNumRequest pageNumRequest);
+    AllWatchLiveResponse selectAllWatchLive(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

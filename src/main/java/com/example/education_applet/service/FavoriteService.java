@@ -10,6 +10,8 @@ import com.example.education_applet.response.favoriteResponse.AllFavoriteRespons
 import com.example.education_applet.response.favoriteResponse.SelectFavoriteByUserIdResponse;
 import com.example.education_applet.response.favoriteResponse.SelectFavoriteByVideoIdResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface FavoriteService {
 
     Integer insertFavorite(AddFavoriteRequest addFavoriteRequest);
@@ -18,7 +20,7 @@ public interface FavoriteService {
 
     SelectFavoriteByUserIdResponse selectFavoriteByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectFavoriteByVideoIdResponse selectFavoriteByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest);
+    SelectFavoriteByVideoIdResponse selectFavoriteByVideoId(VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException;
 
-    AllFavoriteResponse selectAllFavorite(PageNumRequest pageNumRequest);
+    AllFavoriteResponse selectAllFavorite(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

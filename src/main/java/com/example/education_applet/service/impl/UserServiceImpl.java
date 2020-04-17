@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public SelectAllUserResponse selectAllUser(PageNumRequest pageNumRequest) {
+    public SelectAllUserResponse selectAllUser(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<User> users = userDao.selectAllUser();
         PageInfo<User> pageInfo = new PageInfo<>(users);
@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
         for (User user : userList) {
             SelectUserResponse selectUserResponse = new SelectUserResponse();
             BeanUtils.copyProperties(user,selectUserResponse);
+            selectUserResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
             selectUserResponse.setCreateTime(changeDate(user.getCreateTime()));
             if(user.getVipDueTime()==null){
                 selectUserResponse.setVipDueTime(null);

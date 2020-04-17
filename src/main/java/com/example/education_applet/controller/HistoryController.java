@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户观看视频的历史记录")
 @RestController
 public class HistoryController {
@@ -42,13 +44,13 @@ public class HistoryController {
 
     @ApiOperation(value = "通过视频id查看该视频被哪些用户观看过(Admin)")
     @PostMapping(value = "select/history/by/videoId")
-    public EducationJsonResult<SelectHistoryByVideoIdResponse> selectHistoryByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest){
+    public EducationJsonResult<SelectHistoryByVideoIdResponse> selectHistoryByVideoId(@RequestBody VideoIdAndPageNumRequest videoIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(historyService.selectHistoryByVideoId(videoIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查看数据库中所有的观看记录(Admin)")
     @PostMapping(value = "select/all/history")
-    public EducationJsonResult<AllHistoryResponse> selectAllHistory(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<AllHistoryResponse> selectAllHistory(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(historyService.selectAllHistory(pageNumRequest));
     }
 }

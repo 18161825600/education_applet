@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "用户兑换奖品")
 @RestController
 public class GetPrizeController {
@@ -42,7 +44,7 @@ public class GetPrizeController {
 
     @ApiOperation(value = "通过奖品记录id查看获得获得奖品记录(Z&U)")
     @PostMapping(value = "select/getPrize/by/id")
-    public EducationJsonResult<GetPrizeByIdResponse> selectGetPrizeById(@RequestBody IdRequest idRequest){
+    public EducationJsonResult<GetPrizeByIdResponse> selectGetPrizeById(@RequestBody IdRequest idRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(getPrizeService.selectGetPrizeById(idRequest));
     }
 
@@ -54,13 +56,13 @@ public class GetPrizeController {
 
     @ApiOperation(value = "通过奖品id查看该奖品被哪些用户兑换过(Admin)")
     @PostMapping(value = "select/getPrize/by/prizeId")
-    public EducationJsonResult<SelectGetPrizeByPrizeIdResponse> selectGetPrizeByPrizeId(@RequestBody PrizeIdAndPageNumRequest prizeIdAndPageNumRequest){
+    public EducationJsonResult<SelectGetPrizeByPrizeIdResponse> selectGetPrizeByPrizeId(@RequestBody PrizeIdAndPageNumRequest prizeIdAndPageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(getPrizeService.selectGetPrizeByPrizeId(prizeIdAndPageNumRequest));
     }
 
     @ApiOperation(value = "查看数据库中所有的兑换记录(Admin)")
     @PostMapping(value = "select/all/getPrize")
-    public EducationJsonResult<SelectAllGetPrizeResponse> selectAllGetPrize(@RequestBody PageNumRequest pageNumRequest){
+    public EducationJsonResult<SelectAllGetPrizeResponse> selectAllGetPrize(@RequestBody PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         return EducationJsonResult.ok(getPrizeService.selectAllGetPrize(pageNumRequest));
     }
 }

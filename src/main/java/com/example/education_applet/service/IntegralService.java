@@ -10,6 +10,7 @@ import com.example.education_applet.response.integralResponse.SelectCheckInByUse
 import com.example.education_applet.response.integralResponse.SelectIntegralByGetWayRsponse;
 import com.example.education_applet.response.integralResponse.SelectIntegralByUserIdResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
 public interface IntegralService {
@@ -18,11 +19,11 @@ public interface IntegralService {
 
     SelectIntegralByUserIdResponse selectIntegralByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest);
 
-    SelectIntegralByGetWayRsponse selectIntegralByGetWay(SelectIntegralByGetWayRequest selectIntegralByGetWayRequest);
+    SelectIntegralByGetWayRsponse selectIntegralByGetWay(SelectIntegralByGetWayRequest selectIntegralByGetWayRequest) throws UnsupportedEncodingException;
 
     SelectIntegralByUserIdResponse selectIntegralByUserIdAndGetWay(SelectIntegralByUserIdAndGetWayRequest selectIntegralByUserIdAndGetWayRequest);
 
     SelectCheckInByUserIdResponse selectCheckInByUserId(UserIdRequest userIdRequest) throws ParseException;
 
-    SelectAllIntegralResponse selectAllIntegral(PageNumRequest pageNumRequest);
+    SelectAllIntegralResponse selectAllIntegral(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

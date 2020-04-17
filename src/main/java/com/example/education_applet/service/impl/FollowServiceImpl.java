@@ -21,10 +21,12 @@ import com.example.education_applet.service.FollowService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +89,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public SelectFollowByUserIdResponse selectFollowByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest) {
+    public SelectFollowByUserIdResponse selectFollowByUserId(UserIdAndPageNumRequest userIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,userIdAndPageNumRequest.getPageNum()*10);
         List<Follow> follows = followDao.selectFollowByUserId(userIdAndPageNumRequest.getUserId());
         PageInfo<Follow> pageInfo = new PageInfo<>(follows);
@@ -103,7 +105,7 @@ public class FollowServiceImpl implements FollowService {
             followByUserIdResponse.setRoomId(follow.getRoomId());
 
             User user = userDao.selectUserById(follow.getUserId());
-            followByUserIdResponse.setNickName(user.getNickName());
+            followByUserIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
             followByUserIdResponse.setHeadUrl(user.getHeadUrl());
 
             followByUserIdResponse.setCreateTime(changeDate(follow.getCreateTime()));
@@ -115,7 +117,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public SelectFollowByRoomIdResponse selectFollowByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) {
+    public SelectFollowByRoomIdResponse selectFollowByRoomId(RoomIdAndPageNumRequest roomIdAndPageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,roomIdAndPageNumRequest.getPageNum()*10);
         List<Follow> follows = followDao.selectFollowByRoomId(roomIdAndPageNumRequest.getRoomId());
         PageInfo<Follow> pageInfo = new PageInfo<>(follows);
@@ -128,6 +130,7 @@ public class FollowServiceImpl implements FollowService {
 
             User user = userDao.selectUserById(follow.getUserId());
             BeanUtils.copyProperties(user,followByRoomIdResponse);
+            followByRoomIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             followByRoomIdResponse.setCreateTime(changeDate(follow.getCreateTime()));
             list.add(followByRoomIdResponse);
@@ -138,7 +141,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public AllFollowResponse selectAllFollow(PageNumRequest pageNumRequest) {
+    public AllFollowResponse selectAllFollow(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<Follow> follows = followDao.selectAllFollow();
         PageInfo<Follow> pageInfo = new PageInfo<>(follows);
@@ -151,6 +154,7 @@ public class FollowServiceImpl implements FollowService {
 
             User user = userDao.selectUserById(follow.getUserId());
             BeanUtils.copyProperties(user,followResponse);
+            followResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             Room room = roomDao.selectRoomById(follow.getRoomId());
             followResponse.setRoomName(room.getRoomName());

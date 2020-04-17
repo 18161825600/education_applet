@@ -21,5 +21,5 @@ public interface UserService {
 
     User userByOpenId(String openId);
 
-    SelectAllUserResponse selectAllUser(PageNumRequest pageNumRequest);
+    SelectAllUserResponse selectAllUser(PageNumRequest pageNumRequest) throws UnsupportedEncodingException;
 }

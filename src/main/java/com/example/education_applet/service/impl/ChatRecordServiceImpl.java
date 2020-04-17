@@ -11,10 +11,12 @@ import com.example.education_applet.request.ChatRecordRequest.SelectChatRecordRe
 import com.example.education_applet.response.ChatRecordResponse.ChatRecordByRoomIdAndTimeResponse;
 import com.example.education_applet.response.ChatRecordResponse.SelectChatRecordByRoomIdAndTimeResponse;
 import com.example.education_applet.service.ChatRecordService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +43,7 @@ public class ChatRecordServiceImpl implements ChatRecordService {
     }
 
     @Override
-    public SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordRequest selectChatRecordByRoomIdAndTimeRequest) {
+    public SelectChatRecordByRoomIdAndTimeResponse selectSelectChatRecordByRoomIdAndTime(SelectChatRecordRequest selectChatRecordByRoomIdAndTimeRequest) throws UnsupportedEncodingException {
         //通过用户id和房间id拿到该用户的观看记录
         WatchLive watchLive = watchLiveDao.selectWatchLiveByUserIdAndRoomId(selectChatRecordByRoomIdAndTimeRequest.getUserId(), selectChatRecordByRoomIdAndTimeRequest.getRoomId());
         //通过房间id和用户最后拿到直播间弹幕的时间，查找的弹幕集合
@@ -58,6 +60,7 @@ public class ChatRecordServiceImpl implements ChatRecordService {
 
             User user = userDao.selectUserById(chatRecord.getUserId());
             BeanUtils.copyProperties(user,record);
+            record.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
 
             record.setUserMessage(chatRecord.getUserMessage());

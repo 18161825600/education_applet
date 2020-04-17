@@ -14,6 +14,7 @@ import com.example.education_applet.service.IntegralService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.xml.crypto.Data;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,7 +101,7 @@ public class IntegralServiceImpl implements IntegralService {
     }
 
     @Override
-    public SelectIntegralByGetWayRsponse selectIntegralByGetWay(SelectIntegralByGetWayRequest selectIntegralByGetWayRequest) {
+    public SelectIntegralByGetWayRsponse selectIntegralByGetWay(SelectIntegralByGetWayRequest selectIntegralByGetWayRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,selectIntegralByGetWayRequest.getPageNum()*10);
         List<Integral> integrals = integralDao.selectIntegralByGetWay(selectIntegralByGetWayRequest.getGetWay());
         PageInfo<Integral> pageInfo = new PageInfo<>(integrals);
@@ -113,7 +115,7 @@ public class IntegralServiceImpl implements IntegralService {
             integralByGetWayResponse.setCreateTime(changeDate(integral.getCreateTime()));
 
             User user = userDao.selectUserById(integral.getUserId());
-            integralByGetWayResponse.setNickName(user.getNickName());
+            integralByGetWayResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             list.add(integralByGetWayResponse);
         }
@@ -149,7 +151,7 @@ public class IntegralServiceImpl implements IntegralService {
     }
 
     @Override
-    public SelectAllIntegralResponse selectAllIntegral(PageNumRequest pageNumRequest) {
+    public SelectAllIntegralResponse selectAllIntegral(PageNumRequest pageNumRequest) throws UnsupportedEncodingException {
         PageHelper.startPage(1,pageNumRequest.getPageNum()*10);
         List<Integral> integrals = integralDao.selectAllIntegral();
         PageInfo<Integral> pageInfo = new PageInfo<>(integrals);
@@ -163,7 +165,7 @@ public class IntegralServiceImpl implements IntegralService {
             allIntegralResponse.setCreateTime(changeDate(integral.getCreateTime()));
 
             User user = userDao.selectUserById(integral.getUserId());
-            allIntegralResponse.setNickName(user.getNickName());
+            allIntegralResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
 
             list.add(allIntegralResponse);
         }
