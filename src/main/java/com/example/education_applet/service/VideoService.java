@@ -5,6 +5,8 @@ import com.example.education_applet.request.videoRequest.*;
 import com.example.education_applet.response.videoResponse.SelectVideoByIdResponse;
 import com.example.education_applet.response.videoResponse.SelectVideoResponse;
 
+import java.io.UnsupportedEncodingException;
+
 public interface VideoService {
 
     Integer insertVideo(AddVideoRequest addVideoRequest);
@@ -13,7 +15,7 @@ public interface VideoService {
 
     Integer updateVideoVip(UpdateVideoVipRequest updateVideoVipRequest);
 
-    <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest);
+    <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest) throws UnsupportedEncodingException;
 
     SelectVideoResponse selectVideoByName(SelectVideoByNameRequest selectVideoByNameRequest);
 

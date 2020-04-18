@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 @Api(description = "视频")
 @RestController
 public class VideoController {
@@ -47,7 +49,7 @@ public class VideoController {
 
     @ApiOperation(value = "通过视频的id查看视频的详情")
     @PostMapping(value = "select/video/by/id")
-    public <T>T selectVideoById(@RequestBody VideoIdAndUserIdRequest videoIdAndUserIdRequest){
+    public <T>T selectVideoById(@RequestBody VideoIdAndUserIdRequest videoIdAndUserIdRequest)throws UnsupportedEncodingException {
         return (T)EducationJsonResult.ok(videoService.selectVideoById(videoIdAndUserIdRequest));
     }
 

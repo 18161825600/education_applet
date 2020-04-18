@@ -13,11 +13,13 @@ import com.example.education_applet.service.VideoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,7 +62,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest) {
+    public <T>T selectVideoById(VideoIdAndUserIdRequest videoIdAndUserIdRequest) throws UnsupportedEncodingException {
         Video video = videoDao.selectVideoById(videoIdAndUserIdRequest.getVideoId());
         log.info("video-{}",video);
         User user = userDao.selectUserById(videoIdAndUserIdRequest.getUserId());
@@ -162,7 +164,7 @@ public class VideoServiceImpl implements VideoService {
         return selectVideoResponse;
     }
 
-    private List<CommentByVideoIdResponse> changeCommentByVideoIdResponse(List<Comment> comments){
+    private List<CommentByVideoIdResponse> changeCommentByVideoIdResponse(List<Comment> comments) throws UnsupportedEncodingException {
         List<CommentByVideoIdResponse> list = new ArrayList<>();
         for (Comment comment : comments) {
             CommentByVideoIdResponse commentByVideoIdResponse = new CommentByVideoIdResponse();
@@ -170,7 +172,7 @@ public class VideoServiceImpl implements VideoService {
             commentByVideoIdResponse.setCreateTime(changeDate(comment.getCreateTime()));
 
             User commentUser = userDao.selectUserById(comment.getUserId());
-            commentByVideoIdResponse.setNickName(commentUser.getNickName());
+            commentByVideoIdResponse.setNickName(new String(Base64.decodeBase64(commentUser.getNickName().getBytes()), "utf-8"));
             commentByVideoIdResponse.setHeadUrl(commentUser.getHeadUrl());
             commentByVideoIdResponse.setIsVip(commentUser.getIsVip());
 
