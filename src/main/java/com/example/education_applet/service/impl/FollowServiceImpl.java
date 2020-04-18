@@ -8,19 +8,15 @@ import com.example.education_applet.pojo.Follow;
 import com.example.education_applet.pojo.Integral;
 import com.example.education_applet.pojo.Room;
 import com.example.education_applet.pojo.User;
-import com.example.education_applet.request.IdAndPageNumRequest;
-import com.example.education_applet.request.IdRequest;
 import com.example.education_applet.request.IdsRequest;
 import com.example.education_applet.request.PageNumRequest;
 import com.example.education_applet.request.followRequest.AddFollowRequest;
 import com.example.education_applet.request.roomRequest.RoomIdAndPageNumRequest;
 import com.example.education_applet.request.userRequest.UserIdAndPageNumRequest;
-import com.example.education_applet.request.userRequest.UserIdRequest;
 import com.example.education_applet.response.followResponse.*;
 import com.example.education_applet.service.FollowService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import lombok.Data;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,22 +92,29 @@ public class FollowServiceImpl implements FollowService {
 
         List<Follow> followList = pageInfo.getList();
         SelectFollowByUserIdResponse selectFollowByUserIdResponse = new SelectFollowByUserIdResponse();
-        List<FollowByUserIdResponse> list = new ArrayList<>();
+        List<FollowByUserIdResponse> openResponseList = new ArrayList<>();
+        List<FollowByUserIdResponse> closeResponseList = new ArrayList<>();
         for (Follow follow : followList) {
+            Room room = roomDao.selectRoomById(follow.getRoomId());
+            User user = userDao.selectUserById(follow.getUserId());
             FollowByUserIdResponse followByUserIdResponse = new FollowByUserIdResponse();
 
-            Room room = roomDao.selectRoomById(follow.getRoomId());
-            BeanUtils.copyProperties(room,followByUserIdResponse);
+            BeanUtils.copyProperties(room, followByUserIdResponse);
             followByUserIdResponse.setRoomId(follow.getRoomId());
 
-            User user = userDao.selectUserById(follow.getUserId());
             followByUserIdResponse.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
             followByUserIdResponse.setHeadUrl(user.getHeadUrl());
 
             followByUserIdResponse.setCreateTime(changeDate(follow.getCreateTime()));
-            list.add(followByUserIdResponse);
+
+            if(room.getRoomState()==1) {
+                openResponseList.add(followByUserIdResponse);
+            }else {
+                closeResponseList.add(followByUserIdResponse);
+            }
         }
-        selectFollowByUserIdResponse.setFollowByUserIdResponseList(list);
+        selectFollowByUserIdResponse.setFollowByUserIdOpenResponseList(openResponseList);
+        selectFollowByUserIdResponse.setFollowByUserIdCloseResponseList(closeResponseList);
         selectFollowByUserIdResponse.setTotal(followDao.countFollowByUserId(userIdAndPageNumRequest.getUserId()));
         return selectFollowByUserIdResponse;
     }
