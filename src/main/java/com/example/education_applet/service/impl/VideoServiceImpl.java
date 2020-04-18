@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -87,11 +88,17 @@ public class VideoServiceImpl implements VideoService {
             selectVideoByIdResponse.setCommentByVideoIdResponseList(list);
             selectVideoByIdResponse.setFavoriteTotal(favoriteDao.countFavoriteByVideoId(videoIdAndUserIdRequest.getVideoId()));
 
-            History history = new History();
-            history.setVideoId(videoIdAndUserIdRequest.getVideoId());
-            history.setUserId(videoIdAndUserIdRequest.getUserId());
-            history.setCreateTime(new Date());
-            historyDao.insertHistory(history);
+            History history = historyDao.selectHistoryByUserIdAndVideoId(videoIdAndUserIdRequest.getUserId(), videoIdAndUserIdRequest.getVideoId());
+            if(history == null) {
+                History history1 = new History();
+                history1.setVideoId(videoIdAndUserIdRequest.getVideoId());
+                history1.setUserId(videoIdAndUserIdRequest.getUserId());
+                history1.setCreateTime(new Date());
+                historyDao.insertHistory(history1);
+            }else {
+                history.setUpdateTime(new Date());
+                historyDao.updateHistory(history);
+            }
 
             return (T)selectVideoByIdResponse;
         }

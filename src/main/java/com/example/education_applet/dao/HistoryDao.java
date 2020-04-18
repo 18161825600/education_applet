@@ -24,8 +24,19 @@ public class HistoryDao {
         return historyMapper.deleteByExample(example);
     }
 
+    public Integer updateHistory(History history){
+        return historyMapper.updateByPrimaryKeySelective(history);
+    }
+
     public History selectHistoryById(Long id){
         return historyMapper.selectByPrimaryKey(id);
+    }
+
+    public History selectHistoryByUserIdAndVideoId(Long userId,Long videoId){
+        Example example = new Example(History.class);
+        example.createCriteria().andEqualTo("userId",userId)
+                .andEqualTo("videoId",videoId);
+        return historyMapper.selectOneByExample(example);
     }
 
     public List<History> selectHistoryByUserId(Long userId){
