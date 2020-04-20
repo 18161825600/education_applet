@@ -57,6 +57,7 @@ public class HistoryServiceImpl implements HistoryService {
             historyByUserIdResponse.setCreateTime(changeDate(history.getCreateTime()));
 
             Video video = videoDao.selectVideoById(history.getVideoId());
+            historyByUserIdResponse.setVideoId(video.getId());
             historyByUserIdResponse.setVideoName(video.getVideoName());
             historyByUserIdResponse.setVideoPicture(video.getVideoPicture());
 

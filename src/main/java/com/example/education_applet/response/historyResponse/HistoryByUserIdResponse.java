@@ -10,6 +10,8 @@ public class HistoryByUserIdResponse implements Serializable {
 
     private static final long serialVersionUID = 641069044296945291L;
 
+    private Long videoId;
+
     private String videoName;
 
     private String videoPicture;

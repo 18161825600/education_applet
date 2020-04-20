@@ -9,6 +9,8 @@ import java.util.Date;
 public class WatchLiveByUserIdResponse implements Serializable {
     private static final long serialVersionUID = 5957114530664258352L;
 
+    private Long roomId;
+
     private String roomName;
 
     private String roomPicture;

@@ -55,6 +55,8 @@ public class WatchLiveServiceImpl implements WatchLiveService {
             Room room = roomDao.selectRoomById(watchLive.getRoomId());
             BeanUtils.copyProperties(room,watchLiveByUserIdResponse);
 
+            watchLiveByUserIdResponse.setRoomId(room.getId());
+
             watchLiveByUserIdResponse.setOpenTime(changeDate(watchLive.getOpenTime()));
             list.add(watchLiveByUserIdResponse);
         }
