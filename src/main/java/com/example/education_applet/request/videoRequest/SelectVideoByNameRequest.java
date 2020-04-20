@@ -17,5 +17,5 @@ public class SelectVideoByNameRequest implements Serializable {
     @ApiModelProperty(value = "视频名")
     private String videoName;
 
-    private Integer pageNum;
+    private Integer pageNum=1;
 }

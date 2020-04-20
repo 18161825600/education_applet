@@ -17,5 +17,5 @@ public class SelectVideoByVipRequest implements Serializable {
     @ApiModelProperty(value = "是否VIP视频")
     private String isVipVideo;
 
-    private Integer pageNum;
+    private Integer pageNum=1;
 }

@@ -10,5 +10,5 @@ public class CommentIdAndPageNumRequest implements Serializable {
 
     private Long commentId;
 
-    private Integer pageNum;
+    private Integer pageNum=1;
 }
