@@ -10,6 +10,8 @@ public class FavoriteByUserIdResponse implements Serializable {
 
     private static final long serialVersionUID = -5584820082594431110L;
 
+    private Long id;
+
     private Long videoId;
 
     private String videoName;

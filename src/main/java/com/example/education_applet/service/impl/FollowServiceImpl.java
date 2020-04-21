@@ -98,6 +98,7 @@ public class FollowServiceImpl implements FollowService {
             Room room = roomDao.selectRoomById(follow.getRoomId());
             User user = userDao.selectUserById(follow.getUserId());
             FollowByUserIdResponse followByUserIdResponse = new FollowByUserIdResponse();
+            followByUserIdResponse.setId(follow.getId());
 
             BeanUtils.copyProperties(room, followByUserIdResponse);
             followByUserIdResponse.setRoomId(follow.getRoomId());

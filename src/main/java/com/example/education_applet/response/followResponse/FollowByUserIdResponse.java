@@ -9,6 +9,8 @@ import java.util.Date;
 public class FollowByUserIdResponse implements Serializable {
     private static final long serialVersionUID = -8973353664253491522L;
 
+    private Long id;
+
     private Long roomId;
 
     private String roomName;
