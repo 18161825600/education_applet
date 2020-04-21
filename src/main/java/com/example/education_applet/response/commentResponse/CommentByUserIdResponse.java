@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class CommentByUserIdResponse implements Serializable {
     private static final long serialVersionUID = 3753404992574902127L;
 
+    private Long videoId;
+
     private String videoName;
 
     private String videoPicture;

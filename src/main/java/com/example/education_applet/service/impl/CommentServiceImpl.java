@@ -107,6 +107,7 @@ public class CommentServiceImpl implements CommentService {
             commentByUserIdResponse.setComment(comment.getComment());
 
             Video video = videoDao.selectVideoById(comment.getVideoId());
+            commentByUserIdResponse.setVideoId(video.getId());
             commentByUserIdResponse.setVideoName(video.getVideoName());
             commentByUserIdResponse.setVideoPicture(video.getVideoPicture());
             commentByUserIdResponse.setIsVipVideo(video.getIsVipVideo());

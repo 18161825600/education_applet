@@ -101,6 +101,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
             Video video = videoDao.selectVideoById(favorite.getVideoId());
             BeanUtils.copyProperties(video,favoriteByUserIdResponse);
+            favoriteByUserIdResponse.setVideoId(video.getId());
 
             favoriteByUserIdResponse.setCreateTime(changeDate(favorite.getCreateTime()));
             list.add(favoriteByUserIdResponse);
