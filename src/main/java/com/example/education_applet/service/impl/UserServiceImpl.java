@@ -9,6 +9,7 @@ import com.example.education_applet.request.userRequest.LoginUserRequest;
 import com.example.education_applet.request.PageNumRequest;
 import com.example.education_applet.request.userRequest.OpenIdRequest;
 import com.example.education_applet.request.userRequest.UpdateUserBaseInfoRequest;
+import com.example.education_applet.request.userRequest.UserIdRequest;
 import com.example.education_applet.response.userResponse.FindUserByOpenIdResponse;
 import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
@@ -84,6 +85,17 @@ public class UserServiceImpl implements UserService {
         }else {
             response.setVipDueTime(changeDate(user.getVipDueTime()));
         }
+        return response;
+    }
+
+    @Override
+    public SelectUserResponse findUserById(UserIdRequest request) throws UnsupportedEncodingException {
+        SelectUserResponse response = new SelectUserResponse();
+        User user = userDao.selectUserById(request.getUserId());
+        BeanUtils.copyProperties(user,response);
+        response.setNickName(new String(Base64.decodeBase64(user.getNickName().getBytes()), "utf-8"));
+        response.setVipDueTime(changeDate(user.getVipDueTime()));
+        response.setCreateTime(changeDate(user.getVipDueTime()));
         return response;
     }
 

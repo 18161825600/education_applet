@@ -1,4 +1,4 @@
-package com.example.khxcx.utils;
+package com.example.education_applet.utils;
 
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;

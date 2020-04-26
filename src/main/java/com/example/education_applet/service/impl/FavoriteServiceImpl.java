@@ -98,11 +98,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         List<FavoriteByUserIdResponse> list = new ArrayList<>();
         for (Favorite favorite : favoriteList) {
             FavoriteByUserIdResponse favoriteByUserIdResponse = new FavoriteByUserIdResponse();
-            favoriteByUserIdResponse.setId(favorite.getId());
 
             Video video = videoDao.selectVideoById(favorite.getVideoId());
             BeanUtils.copyProperties(video,favoriteByUserIdResponse);
             favoriteByUserIdResponse.setVideoId(video.getId());
+            favoriteByUserIdResponse.setId(favorite.getId());
 
             favoriteByUserIdResponse.setCreateTime(changeDate(favorite.getCreateTime()));
             list.add(favoriteByUserIdResponse);

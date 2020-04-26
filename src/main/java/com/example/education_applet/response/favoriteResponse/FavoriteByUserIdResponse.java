@@ -21,4 +21,6 @@ public class FavoriteByUserIdResponse implements Serializable {
     private Short isVipVideo;
 
     private String createTime;
+
+    private Integer right=0;
 }

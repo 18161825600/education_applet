@@ -5,9 +5,11 @@ import com.example.education_applet.request.userRequest.LoginUserRequest;
 import com.example.education_applet.request.PageNumRequest;
 import com.example.education_applet.request.userRequest.OpenIdRequest;
 import com.example.education_applet.request.userRequest.UpdateUserBaseInfoRequest;
+import com.example.education_applet.request.userRequest.UserIdRequest;
 import com.example.education_applet.response.userResponse.FindUserByOpenIdResponse;
 import com.example.education_applet.response.userResponse.LoginUserResponse;
 import com.example.education_applet.response.userResponse.SelectAllUserResponse;
+import com.example.education_applet.response.userResponse.SelectUserResponse;
 import com.example.education_applet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,5 +46,11 @@ public class UserController {
     @PostMapping(value = "find/user/by/openId")
     public EducationJsonResult<FindUserByOpenIdResponse> findUserByOpenId(OpenIdRequest openIdRequest)throws UnsupportedEncodingException{
         return EducationJsonResult.ok(userService.findUserByOpenId(openIdRequest));
+    }
+
+    @ApiOperation(value = "通过id查找用户(Z&U)")
+    @PostMapping(value = "find/user/by/id")
+    public EducationJsonResult<SelectUserResponse> findUserById(@RequestBody UserIdRequest request) throws UnsupportedEncodingException{
+        return EducationJsonResult.ok(userService.findUserById(request));
     }
 }
